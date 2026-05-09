@@ -137,6 +137,7 @@ p + p { margin-top: 1em; }
   object-position: center;
   -webkit-touch-callout: none;
   user-select: none;
+  pointer-events: none;
 }
 .hero__placeholder {
   position: absolute;
@@ -271,6 +272,7 @@ p + p { margin-top: 1em; }
   transition: transform calc(var(--dur) * 2) var(--ease);
   -webkit-touch-callout: none;
   user-select: none;
+  pointer-events: none;
 }
 .gallery-item:hover .gallery-item__img { transform: scale(1.03); }
 .gallery-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -313,6 +315,7 @@ p + p { margin-top: 1em; }
   will-change: transform;
   -webkit-touch-callout: none;
   user-select: none;
+  pointer-events: none;
 }
 .lightbox__meta {
   position: absolute;

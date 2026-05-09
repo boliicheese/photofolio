@@ -32,7 +32,7 @@ export function createApp() {
         imgSrc:      ["'self'", s3Origin, 'data:', 'blob:'],
         connectSrc:  ["'self'", s3Origin],
         frameAncestors: ["'none'"],
-        upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
+        upgradeInsecureRequests: process.env.HTTPS_ENABLED === 'true' ? [] : null,
       },
     },
     crossOriginEmbedderPolicy: false,

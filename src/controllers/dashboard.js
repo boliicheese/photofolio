@@ -11,7 +11,7 @@ export async function getDashboard(req, res, next) {
     ]);
 
     res.render('admin/dashboard', {
-      title: 'Dashboard — Admin',
+      title: res.locals.t.meta.adminDashboard,
       photoCount:       Number(photoRow.count),
       collectionCount:  Number(colRow.count),
       unreadCount:      Number(unreadRow.count),

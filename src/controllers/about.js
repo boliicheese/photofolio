@@ -1,3 +1,3 @@
 export function getAbout(req, res) {
-  res.render('about', { title: 'About — Bolivar Barrios' });
+  res.render('about', { title: res.locals.t.meta.about });
 }

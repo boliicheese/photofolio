@@ -3,12 +3,12 @@
 
 <main class="admin-main">
   <div class="admin-page-header">
-    <h1 class="admin-page-title">Fotos (<%= photos.length %>)</h1>
-    <a href="/admin/photos/upload" class="btn btn--primary btn--sm">+ Subir</a>
+    <h1 class="admin-page-title"><%= t.admin.nav.photos %> (<%= photos.length %>)</h1>
+    <a href="/admin/photos/upload" class="btn btn--primary btn--sm"><%= t.admin.photos.uploadBtn %></a>
   </div>
 
   <% if (photos.length === 0) { %>
-    <div class="empty-state"><p>No hay fotos todavía. <a href="/admin/photos/upload">Sube la primera.</a></p></div>
+    <div class="empty-state"><p><%= t.admin.photos.empty %> <a href="/admin/photos/upload"><%= t.admin.photos.uploadFirst %></a></p></div>
   <% } else { %>
     <div class="photo-table">
       <% photos.forEach(photo => { %>
@@ -16,42 +16,43 @@
           <img class="photo-row__thumb" src="<%= photo.thumbUrl %>" alt="<%= photo.title || '' %>">
 
           <div class="photo-row__info">
-            <span class="photo-row__title"><%- photo.title || '<em>Sin título</em>' %></span>
+            <span class="photo-row__title"><%- photo.title || '<em>—</em>' %></span>
             <span class="photo-row__meta">
               <%= photo.location || '' %>
-              <% if (photo.featured) { %><span class="badge badge--featured">Featured</span><% } %>
+              <% if (photo.featured) { %><span class="badge badge--featured"><%= t.admin.photos.featureLabel %></span><% } %>
+              <% if (photo.carouselOrder) { %><span class="badge badge--carousel">#<%= photo.carouselOrder %></span><% } %>
             </span>
             <span class="photo-row__order">orden: <%= photo.displayOrder %></span>
           </div>
 
           <div class="photo-row__actions">
             <a class="btn btn--ghost btn--sm" href="<%= photo.mediumUrl %>" target="_blank" rel="noopener" title="Ver con watermark">WM</a>
-            <button class="btn btn--ghost btn--sm js-edit-photo" aria-expanded="false">Editar</button>
-            <button class="btn btn--danger btn--sm js-delete-photo">Eliminar</button>
+            <button class="btn btn--ghost btn--sm js-edit-photo" aria-expanded="false"><%= t.admin.photos.edit %></button>
+            <button class="btn btn--danger btn--sm js-delete-photo"><%= t.admin.photos.delete %></button>
           </div>
 
           <form class="photo-edit-form js-photo-edit-form" data-id="<%= photo.id %>" hidden>
             <div class="photo-edit-grid">
               <div class="form-group">
-                <label class="form-label">Título</label>
+                <label class="form-label"><%= t.admin.photos.titleField %></label>
                 <input class="form-input" type="text" name="title" value="<%= photo.title || '' %>">
               </div>
               <div class="form-group">
-                <label class="form-label">Ubicación</label>
+                <label class="form-label"><%= t.admin.photos.location %></label>
                 <input class="form-input" type="text" name="location" value="<%= photo.location || '' %>">
               </div>
               <div class="form-group">
-                <label class="form-label">Fecha</label>
+                <label class="form-label"><%= t.admin.photos.date %></label>
                 <input class="form-input" type="date" name="shotAt" value="<%= photo.shotAt || '' %>">
               </div>
               <div class="form-group">
-                <label class="form-label">Orden</label>
+                <label class="form-label"><%= t.admin.photos.order %></label>
                 <input class="form-input" type="number" name="displayOrder" value="<%= photo.displayOrder %>">
               </div>
               <div class="form-group">
                 <label class="form-label">Colección</label>
                 <select class="form-input" name="collectionId">
-                  <option value="">— Sin colección —</option>
+                  <option value=""><%= t.admin.photos.noCollection %></option>
                   <% collections.forEach(col => { %>
                     <option value="<%= col.id %>"><%= col.name %></option>
                   <% }) %>
@@ -60,21 +61,21 @@
               <div class="form-group form-group--check">
                 <label class="form-check">
                   <input type="checkbox" name="featured" value="true" <%= photo.featured ? 'checked' : '' %>>
-                  <span>Featured (aparece en hero)</span>
+                  <span><%= t.admin.photos.featureLabel %></span>
                 </label>
               </div>
               <div class="form-group form-group--full">
-                <label class="form-label">Caption</label>
+                <label class="form-label"><%= t.admin.photos.caption %></label>
                 <textarea class="form-input form-textarea" name="caption" rows="2"><%= photo.caption || '' %></textarea>
               </div>
               <div class="form-group form-group--full">
-                <label class="form-label">Tags (separados por coma)</label>
+                <label class="form-label"><%= t.admin.photos.tags %></label>
                 <input class="form-input" type="text" name="tags" value="">
               </div>
             </div>
             <div class="photo-edit-form__actions">
-              <button class="btn btn--primary btn--sm" type="submit">Guardar</button>
-              <button class="btn btn--ghost btn--sm js-cancel-edit" type="button">Cancelar</button>
+              <button class="btn btn--primary btn--sm" type="submit"><%= t.admin.photos.save %></button>
+              <button class="btn btn--ghost btn--sm js-cancel-edit" type="button"><%= t.admin.photos.cancel %></button>
             </div>
           </form>
         </div>
@@ -82,6 +83,17 @@
     </div>
   <% } %>
 </main>
+
+<script type="application/json" id="admin-i18n">
+<%- JSON.stringify({
+  confirmDelete: t.admin.photos.confirmDelete,
+  errSave: t.admin.photos.errSave,
+  errDelete: t.admin.photos.errDelete,
+  errCreateCollection: t.admin.collections.errCreate,
+  confirmDeleteCollection: t.admin.collections.confirmDelete,
+  errDeleteCollection: t.admin.collections.errDelete,
+}).replace(/</g, '\\u003c') %>
+</script>
 
 <script type="module" src="/dist/admin.js"></script>
 </body>

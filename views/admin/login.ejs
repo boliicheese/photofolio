@@ -2,7 +2,7 @@
 
 <main class="login-page">
   <div class="login-card">
-    <h1 class="login-card__title">PhotoFolio</h1>
+    <h1 class="login-card__title">BB</h1>
 
     <% if (error) { %>
       <div class="alert alert--error"><p><%= error %></p></div>
@@ -14,10 +14,10 @@
         <input class="form-input" type="email" id="email" name="email" required autocomplete="username">
       </div>
       <div class="form-group">
-        <label class="form-label" for="password">Contraseña</label>
+        <label class="form-label" for="password"><%= t.admin.login.password %></label>
         <input class="form-input" type="password" id="password" name="password" required autocomplete="current-password">
       </div>
-      <button class="btn btn--primary btn--full" type="submit">Entrar</button>
+      <button class="btn btn--primary btn--full" type="submit"><%= t.admin.login.submit %></button>
     </form>
   </div>
 </main>

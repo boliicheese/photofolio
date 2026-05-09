@@ -11,16 +11,17 @@ const loginSchema = z.object({
 
 export function getLogin(req, res) {
   if (req.session?.adminId) return res.redirect('/admin');
-  res.render('admin/login', { title: 'Login — Admin', error: null });
+  res.render('admin/login', { title: res.locals.t.meta.adminLogin, error: null });
 }
 
 export async function postLogin(req, res, next) {
   try {
+    const { t } = res.locals;
     const result = loginSchema.safeParse(req.body);
     if (!result.success) {
       return res.status(422).render('admin/login', {
-        title: 'Login — Admin',
-        error: 'Email y contraseña requeridos.',
+        title: t.meta.adminLogin,
+        error: t.admin.login.required,
       });
     }
 
@@ -36,8 +37,8 @@ export async function postLogin(req, res, next) {
 
     if (!user || !valid) {
       return res.status(401).render('admin/login', {
-        title: 'Login — Admin',
-        error: 'Email o contraseña incorrectos.',
+        title: t.meta.adminLogin,
+        error: t.admin.login.invalid,
       });
     }
 

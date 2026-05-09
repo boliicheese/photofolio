@@ -8,7 +8,7 @@ export async function getSubmissions(req, res, next) {
       .from(contactSubmissions)
       .orderBy(desc(contactSubmissions.createdAt));
 
-    res.render('admin/submissions', { title: 'Mensajes — Admin', submissions: rows });
+    res.render('admin/submissions', { title: res.locals.t.meta.adminSubmissions, submissions: rows });
   } catch (err) {
     next(err);
   }

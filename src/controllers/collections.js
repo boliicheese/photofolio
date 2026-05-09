@@ -28,7 +28,7 @@ export async function getCollections(req, res, next) {
       })
     );
 
-    res.render('collections', { title: 'Colecciones — Bolivar Barrios', collections: enriched });
+    res.render('collections', { title: res.locals.t.meta.collections, collections: enriched });
   } catch (err) {
     next(err);
   }
@@ -76,7 +76,7 @@ export async function getAdminCollections(req, res, next) {
     ]);
 
     res.render('admin/collections', {
-      title: 'Colecciones — Admin',
+      title: res.locals.t.meta.adminCollections,
       collections: cols,
       photos: allPhotos.map((p) => ({ ...p, thumbUrl: getPublicUrl(p.s3KeyThumb) })),
     });

@@ -8,6 +8,13 @@ import { contactLimiter } from '../middleware/rateLimiter.js';
 
 export const publicRouter = Router();
 
+publicRouter.get('/lang/:code', (req, res) => {
+  const { code } = req.params;
+  if (['es', 'en'].includes(code)) req.session.lang = code;
+  const back = req.get('Referrer') || '/';
+  res.redirect(back);
+});
+
 publicRouter.get('/', getHome);
 publicRouter.get('/gallery', getGallery);
 publicRouter.get('/collections', getCollections);

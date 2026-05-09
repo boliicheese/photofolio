@@ -12,7 +12,7 @@ const schema = z.object({
 
 export function getContact(req, res) {
   res.render('contact', {
-    title: 'Contacto — Bolivar Barrios',
+    title: res.locals.t.meta.contact,
     success: false,
     error: null,
     formData: {},
@@ -21,23 +21,23 @@ export function getContact(req, res) {
 
 export async function postContact(req, res, next) {
   try {
+    const { t } = res.locals;
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
       return res.status(422).render('contact', {
-        title: 'Contacto — Bolivar Barrios',
+        title: t.meta.contact,
         success: false,
-        error: 'Por favor revisa los campos del formulario.',
+        error: t.contact.validationError,
         formData: req.body,
       });
     }
 
     const { name, email, message, website } = result.data;
 
-    // Honeypot triggered — silent success to not reveal detection
     if (website) {
       return res.render('contact', {
-        title: 'Contacto — Bolivar Barrios',
+        title: t.meta.contact,
         success: true,
         error: null,
         formData: {},
@@ -51,13 +51,12 @@ export async function postContact(req, res, next) {
       ip: req.ip,
     });
 
-    // Fire-and-forget — a SES failure should not break the user experience
     sendContactNotification({ name, email, message }).catch((err) => {
       console.error('[SES] Failed to send notification:', err.message);
     });
 
     res.render('contact', {
-      title: 'Contacto — Bolivar Barrios',
+      title: t.meta.contact,
       success: true,
       error: null,
       formData: {},

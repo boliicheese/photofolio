@@ -3,38 +3,38 @@
 
 <main class="admin-main">
   <div class="admin-page-header">
-    <h1 class="admin-page-title">Colecciones</h1>
-    <button class="btn btn--primary btn--sm" id="new-collection-btn">+ Nueva</button>
+    <h1 class="admin-page-title"><%= t.admin.nav.collections %></h1>
+    <button class="btn btn--primary btn--sm" id="new-collection-btn"><%= t.admin.collections.new %></button>
   </div>
 
   <form class="collection-form js-collection-form" id="new-collection-form" hidden>
     <div class="photo-edit-grid">
       <div class="form-group">
-        <label class="form-label">Nombre</label>
+        <label class="form-label"><%= t.admin.collections.name %></label>
         <input class="form-input" type="text" name="name" required>
       </div>
       <div class="form-group">
-        <label class="form-label">Slug (URL)</label>
+        <label class="form-label"><%= t.admin.collections.slug %></label>
         <input class="form-input" type="text" name="slug" pattern="[a-z0-9-]+" placeholder="mi-coleccion" required>
       </div>
       <div class="form-group">
-        <label class="form-label">Orden</label>
+        <label class="form-label"><%= t.admin.collections.order %></label>
         <input class="form-input" type="number" name="displayOrder" value="0">
       </div>
       <div class="form-group form-group--full">
-        <label class="form-label">Descripción</label>
+        <label class="form-label"><%= t.admin.collections.description %></label>
         <textarea class="form-input form-textarea" name="description" rows="2"></textarea>
       </div>
     </div>
     <div class="photo-edit-form__actions">
-      <button class="btn btn--primary btn--sm" type="submit">Crear</button>
-      <button class="btn btn--ghost btn--sm" type="button" id="cancel-new-collection">Cancelar</button>
+      <button class="btn btn--primary btn--sm" type="submit"><%= t.admin.collections.create %></button>
+      <button class="btn btn--ghost btn--sm" type="button" id="cancel-new-collection"><%= t.admin.collections.cancel %></button>
     </div>
   </form>
 
   <div class="collection-list">
     <% if (collections.length === 0) { %>
-      <div class="empty-state"><p>No hay colecciones todavía.</p></div>
+      <div class="empty-state"><p><%= t.admin.collections.empty %></p></div>
     <% } else { %>
       <% collections.forEach(col => { %>
         <div class="collection-row" data-id="<%= col.id %>">
@@ -43,13 +43,24 @@
             <span class="collection-row__slug">/<%= col.slug %></span>
           </div>
           <div class="collection-row__actions">
-            <button class="btn btn--ghost btn--sm js-delete-collection" data-id="<%= col.id %>">Eliminar</button>
+            <button class="btn btn--ghost btn--sm js-delete-collection" data-id="<%= col.id %>"><%= t.admin.collections.delete %></button>
           </div>
         </div>
       <% }) %>
     <% } %>
   </div>
 </main>
+
+<script type="application/json" id="admin-i18n">
+<%- JSON.stringify({
+  confirmDelete: t.admin.photos.confirmDelete,
+  errSave: t.admin.photos.errSave,
+  errDelete: t.admin.photos.errDelete,
+  errCreateCollection: t.admin.collections.errCreate,
+  confirmDeleteCollection: t.admin.collections.confirmDelete,
+  errDeleteCollection: t.admin.collections.errDelete,
+}).replace(/</g, '\\u003c') %>
+</script>
 
 <script type="module" src="/dist/admin.js"></script>
 </body>

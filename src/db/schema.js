@@ -11,6 +11,7 @@ export const photos = pgTable('photos', {
   shotAt:         date('shot_at'),
   featured:       boolean('featured').notNull().default(false),
   displayOrder:   integer('display_order').notNull().default(0),
+  carouselOrder:  integer('carousel_order'),
   s3KeyThumb:     text('s3_key_thumb').notNull(),
   s3KeyMedium:    text('s3_key_medium').notNull(),
   s3KeyFull:      text('s3_key_full').notNull(),

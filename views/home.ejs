@@ -3,21 +3,35 @@
 
 <main>
   <section class="hero">
-    <% if (featured) { %>
-      <img
-        class="hero__img"
-        src="<%= featured.originalUrl %>"
-        alt="<%= featured.title || 'Featured photo' %>"
-        loading="eager"
-        draggable="false"
-      >
+    <% if (carouselPhotos.length > 0) { %>
+      <div class="hero__carousel">
+        <% carouselPhotos.forEach((photo, i) => { %>
+          <div class="hero__slide<%= i === 0 ? ' is-active' : '' %>">
+            <img
+              src="<%= photo.originalUrl %>"
+              alt="<%= photo.title || '' %>"
+              loading="<%= i === 0 ? 'eager' : 'lazy' %>"
+              draggable="false"
+            >
+          </div>
+        <% }) %>
+      </div>
+      <% if (carouselPhotos.length > 1) { %>
+        <button class="hero__arrow hero__arrow--prev" id="hero-prev" aria-label="Previous">&#8592;</button>
+        <button class="hero__arrow hero__arrow--next" id="hero-next" aria-label="Next">&#8594;</button>
+        <div class="hero__dots" aria-hidden="true">
+          <% carouselPhotos.forEach((_, i) => { %>
+            <span class="hero__dot<%= i === 0 ? ' is-active' : '' %>"></span>
+          <% }) %>
+        </div>
+      <% } %>
     <% } else { %>
       <div class="hero__placeholder"></div>
     <% } %>
 
     <div class="hero__text">
       <h1 class="hero__name">Bolivar Barrios</h1>
-      <p class="hero__tagline">Fotografía desde Panamá.</p>
+      <p class="hero__tagline"><%= t.home.tagline %></p>
     </div>
 
     <div class="hero__scroll-cue" aria-hidden="true">
@@ -29,7 +43,7 @@
   </section>
 
   <section class="home-intro">
-    <a href="/gallery" class="home-intro__link">Ver galería →</a>
+    <a href="/gallery" class="home-intro__link"><%= t.home.viewGallery %></a>
   </section>
 </main>
 

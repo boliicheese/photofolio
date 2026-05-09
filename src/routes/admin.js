@@ -6,6 +6,7 @@ import { getPhotoList, patchPhoto, deletePhoto } from '../controllers/photos.js'
 import { getUploadPage, postPresign, postComplete } from '../controllers/upload.js';
 import { getAdminCollections, postCollection, patchCollection, deleteCollection } from '../controllers/collections.js';
 import { getSubmissions, patchSubmissionRead } from '../controllers/submissions.js';
+import { getCarouselAdmin, putCarouselSlot, deleteCarouselSlot } from '../controllers/carousel.js';
 
 export const adminRouter = Router();
 
@@ -31,3 +32,7 @@ adminRouter.delete('/collections/:id', requireAuth, deleteCollection);
 
 adminRouter.get('/submissions', requireAuth, getSubmissions);
 adminRouter.patch('/submissions/:id/read', requireAuth, patchSubmissionRead);
+
+adminRouter.get('/carousel', requireAuth, getCarouselAdmin);
+adminRouter.put('/carousel/:position', requireAuth, putCarouselSlot);
+adminRouter.delete('/carousel/:position', requireAuth, deleteCarouselSlot);

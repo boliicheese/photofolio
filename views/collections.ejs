@@ -2,11 +2,11 @@
 <%- include('partials/nav', { currentPath: '/collections' }) %>
 
 <main class="page-text">
-  <h1 class="page-title">Colecciones</h1>
+  <h1 class="page-title"><%= t.collections.title %></h1>
 
   <% if (collections.length === 0) { %>
     <div class="empty-state">
-      <p>No hay colecciones todavía.</p>
+      <p><%= t.collections.empty %></p>
     </div>
   <% } else { %>
     <div class="collections-grid">
@@ -21,7 +21,7 @@
           </div>
           <div class="collection-card__meta">
             <span class="collection-card__name"><%= col.name %></span>
-            <span class="collection-card__count"><%= col.photoCount %> foto<%= col.photoCount !== 1 ? 's' : '' %></span>
+            <span class="collection-card__count"><%= t.collections.photoCount(col.photoCount) %></span>
           </div>
         </a>
       <% }) %>

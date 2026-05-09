@@ -1,12 +1,19 @@
-<header class="admin-nav">
-  <a class="admin-nav__logo" href="/admin">PhotoFolio</a>
-  <nav class="admin-nav__links">
-    <a href="/admin/photos" class="admin-nav__link">Fotos</a>
-    <a href="/admin/photos/upload" class="admin-nav__link">Subir</a>
-    <a href="/admin/collections" class="admin-nav__link">Colecciones</a>
-    <a href="/admin/submissions" class="admin-nav__link">Mensajes</a>
+<header class="nav nav--admin" id="admin-nav">
+  <a class="nav__logo" href="/admin">BB</a>
+  <nav class="nav__links" id="admin-nav-links">
+    <a href="/admin/photos" class="nav__link<%= currentPath?.startsWith('/admin/photos') ? ' nav__link--active' : '' %>"><%= t.admin.nav.photos %></a>
+    <a href="/admin/photos/upload" class="nav__link<%= currentPath === '/admin/photos/upload' ? ' nav__link--active' : '' %>"><%= t.admin.nav.upload %></a>
+    <a href="/admin/collections" class="nav__link<%= currentPath === '/admin/collections' ? ' nav__link--active' : '' %>"><%= t.admin.nav.collections %></a>
+    <a href="/admin/submissions" class="nav__link<%= currentPath === '/admin/submissions' ? ' nav__link--active' : '' %>"><%= t.admin.nav.messages %></a>
+    <a href="/admin/carousel" class="nav__link<%= currentPath === '/admin/carousel' ? ' nav__link--active' : '' %>"><%= t.admin.nav.carousel %></a>
+    <a href="/lang/<%= lang === 'es' ? 'en' : 'es' %>" class="nav__link nav__lang-toggle"><%= lang === 'es' ? 'EN' : 'ES' %></a>
+    <form method="POST" action="/admin/logout" class="nav__logout-form">
+      <button type="submit" class="nav__link nav__link-btn"><%= t.admin.nav.logout %></button>
+    </form>
   </nav>
-  <form method="POST" action="/admin/logout" class="admin-nav__logout">
-    <button type="submit" class="btn btn--ghost btn--sm">Salir</button>
-  </form>
+  <button class="nav__burger" id="admin-nav-burger" aria-label="Menu" aria-expanded="false">
+    <span class="nav__burger-line"></span>
+    <span class="nav__burger-line"></span>
+    <span class="nav__burger-line"></span>
+  </button>
 </header>

@@ -5,7 +5,7 @@
   <div class="error-page">
     <span class="error-page__code"><%= code %></span>
     <p class="error-page__message"><%= message %></p>
-    <a href="/" class="btn btn--ghost">Volver al inicio</a>
+    <a href="/" class="btn btn--ghost"><%= typeof t !== 'undefined' ? t.error.backHome : 'Volver al inicio' %></a>
   </div>
 </main>
 

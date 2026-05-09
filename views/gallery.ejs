@@ -4,7 +4,7 @@
 <main class="page-gallery">
   <% if (photos.length === 0) { %>
     <div class="empty-state">
-      <p>La galería está vacía por el momento.</p>
+      <p><%= t.gallery.empty %></p>
     </div>
   <% } else { %>
     <div class="gallery-grid" id="gallery-grid">
@@ -12,7 +12,7 @@
         <button
           class="gallery-item"
           data-index="<%= i %>"
-          aria-label="<%= photo.title || 'Ver foto' %>"
+          aria-label="<%= photo.title || t.gallery.viewPhoto %>"
           style="--ar-ratio: <%= photo.originalHeight && photo.originalWidth ? photo.originalWidth + '/' + photo.originalHeight : '3/2' %>"
         >
           <img
@@ -28,7 +28,6 @@
   <% } %>
 </main>
 
-<!-- Photo data for lightbox -->
 <script type="application/json" id="gallery-data">
 <%- JSON.stringify(photos.map(p => ({
   title:       p.title,

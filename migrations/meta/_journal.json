@@ -8,6 +8,13 @@
       "when": 1778291280778,
       "tag": "0000_colorful_boomer",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778356187630,
+      "tag": "0001_open_azazel",
+      "breakpoints": true
     }
   ]
 }

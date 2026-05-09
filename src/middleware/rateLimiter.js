@@ -14,9 +14,10 @@ export const contactLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req, res) => {
+    const t = res.locals?.t;
     res.status(429).render('contact', {
-      title: 'Contacto — Bolivar Barrios',
-      error: 'Demasiados intentos. Intenta de nuevo en 15 minutos.',
+      title: t?.meta?.contact || 'Contacto — Bolivar Barrios',
+      error: t?.contact?.rateLimit || 'Demasiados intentos. Intenta de nuevo en 15 minutos.',
       formData: {},
       success: false,
     });

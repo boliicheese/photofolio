@@ -20,7 +20,7 @@ export async function getPhotoList(req, res, next) {
     );
 
     res.render('admin/photos', {
-      title: 'Fotos — Admin',
+      title: res.locals.t.meta.adminPhotos,
       photos: photosWithUrls,
       collections: allCollections,
     });

@@ -1,21 +1,26 @@
 import { db } from '../db/client.js';
 import { photos } from '../db/schema.js';
-import { eq, asc } from 'drizzle-orm';
+import { asc, isNotNull } from 'drizzle-orm';
 import { presignGet } from '../services/s3.js';
 
 export async function getHome(req, res, next) {
   try {
-    const [featured] = await db.select()
+    const rows = await db.select()
       .from(photos)
-      .where(eq(photos.featured, true))
-      .orderBy(asc(photos.displayOrder))
-      .limit(1);
+      .where(isNotNull(photos.carouselOrder))
+      .orderBy(asc(photos.carouselOrder))
+      .limit(5);
+
+    const carouselPhotos = await Promise.all(
+      rows.map(async (p) => ({
+        ...p,
+        originalUrl: await presignGet(p.s3KeyOriginal),
+      }))
+    );
 
     res.render('home', {
-      title: 'Bolivar Barrios — Fotografía desde Panamá',
-      featured: featured
-        ? { ...featured, originalUrl: await presignGet(featured.s3KeyOriginal) }
-        : null,
+      title: res.locals.t.meta.home,
+      carouselPhotos,
       heroNav: true,
     });
   } catch (err) {

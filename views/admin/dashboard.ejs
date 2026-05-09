@@ -7,22 +7,22 @@
   <div class="stats-grid">
     <div class="stat-card">
       <span class="stat-card__number"><%= photoCount %></span>
-      <span class="stat-card__label">fotos</span>
+      <span class="stat-card__label"><%= t.admin.dashboard.photos %></span>
     </div>
     <div class="stat-card">
       <span class="stat-card__number"><%= collectionCount %></span>
-      <span class="stat-card__label">colecciones</span>
+      <span class="stat-card__label"><%= t.admin.dashboard.collections %></span>
     </div>
     <div class="stat-card<%= unreadCount > 0 ? ' stat-card--alert' : '' %>">
       <span class="stat-card__number"><%= unreadCount %></span>
-      <span class="stat-card__label">mensajes sin leer</span>
+      <span class="stat-card__label"><%= t.admin.dashboard.unread %></span>
     </div>
   </div>
 
   <div class="dashboard-actions">
-    <a href="/admin/photos/upload" class="btn btn--primary">Subir fotos</a>
-    <a href="/admin/submissions" class="btn btn--ghost">Ver mensajes</a>
-    <a href="/" class="btn btn--ghost" target="_blank">Ver sitio →</a>
+    <a href="/admin/photos/upload" class="btn btn--primary"><%= t.admin.dashboard.uploadPhotos %></a>
+    <a href="/admin/submissions" class="btn btn--ghost"><%= t.admin.dashboard.viewMessages %></a>
+    <a href="/" class="btn btn--ghost" target="_blank"><%= t.admin.dashboard.viewSite %></a>
   </div>
 </main>
 

@@ -6,6 +6,7 @@ import pg from 'pg';
 import { publicRouter } from './routes/public.js';
 import { adminRouter } from './routes/admin.js';
 import { globalLimiter } from './middleware/rateLimiter.js';
+import { langMiddleware } from './middleware/lang.js';
 
 const { Pool } = pg;
 const PgStore = connectPgSimple(session);
@@ -72,6 +73,9 @@ export function createApp() {
       sameSite: 'lax',
     },
   }));
+
+  // ── i18n ──────────────────────────────────────────────────────────────────
+  app.use(langMiddleware);
 
   // ── Routes ────────────────────────────────────────────────────────────────
   app.use('/', publicRouter);

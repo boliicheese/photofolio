@@ -1,0 +1,70 @@
+<%- include('../partials/head', { title, bodyClass: 'admin-body' }) %>
+<%- include('../partials/admin-nav') %>
+
+<main class="admin-main">
+  <div class="admin-page-header">
+    <h1 class="admin-page-title"><%= t.admin.nav.carousel %></h1>
+  </div>
+  <p class="admin-page-subtitle"><%= t.admin.carousel.subtitle %></p>
+
+  <div class="carousel-slots">
+    <% slots.forEach(slot => { %>
+      <div class="carousel-slot" data-position="<%= slot.position %>">
+        <div class="carousel-slot__header">
+          <span class="carousel-slot__position"><%= t.admin.carousel.position %> <%= slot.position %></span>
+          <% if (slot.photo) { %>
+            <button class="btn btn--danger btn--sm js-remove-slot"><%= t.admin.carousel.remove %></button>
+          <% } %>
+        </div>
+        <% if (slot.photo) { %>
+          <img class="carousel-slot__thumb" src="<%= slot.photo.thumbUrl %>" alt="<%= slot.photo.title || '' %>">
+          <p class="carousel-slot__name"><%= slot.photo.title || '—' %></p>
+          <button class="btn btn--ghost btn--sm js-pick-slot"><%= t.admin.carousel.change %></button>
+        <% } else { %>
+          <div class="carousel-slot__empty"><%= t.admin.carousel.empty %></div>
+          <button class="btn btn--ghost btn--sm js-pick-slot"><%= t.admin.carousel.select %></button>
+        <% } %>
+      </div>
+    <% }) %>
+  </div>
+</main>
+
+<!-- Photo picker modal -->
+<div class="photo-picker" id="photo-picker" hidden>
+  <div class="photo-picker__backdrop" id="picker-backdrop"></div>
+  <div class="photo-picker__panel">
+    <div class="photo-picker__header">
+      <h2 class="photo-picker__title" id="picker-title" data-label="<%= t.admin.carousel.pickTitle %>"><%= t.admin.carousel.pickTitle %> 1</h2>
+      <button class="photo-picker__close btn btn--ghost btn--sm" id="picker-close"><%= t.admin.carousel.cancel %></button>
+    </div>
+    <% if (allPhotos.length === 0) { %>
+      <p class="picker-empty"><%= t.admin.carousel.noPhotos %></p>
+    <% } else { %>
+      <div class="photo-picker__grid">
+        <% allPhotos.forEach(p => { %>
+          <button class="picker-item" data-id="<%= p.id %>">
+            <img src="<%= p.thumbUrl %>" alt="<%= p.title || '' %>">
+            <% if (p.title) { %><span class="picker-item__name"><%= p.title %></span><% } %>
+          </button>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<script type="application/json" id="admin-i18n">
+<%- JSON.stringify({
+  confirmDelete: t.admin.photos.confirmDelete,
+  errSave: t.admin.photos.errSave,
+  errDelete: t.admin.photos.errDelete,
+  errCreateCollection: t.admin.collections.errCreate,
+  confirmDeleteCollection: t.admin.collections.confirmDelete,
+  errDeleteCollection: t.admin.collections.errDelete,
+  errAssign: t.admin.carousel.errAssign,
+  errRemove: t.admin.carousel.errRemove,
+}).replace(/</g, '\\u003c') %>
+</script>
+
+<script type="module" src="/dist/admin.js"></script>
+</body>
+</html>

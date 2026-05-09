@@ -6,7 +6,7 @@ import { eq, asc } from 'drizzle-orm';
 import { presignPut } from '../services/s3.js';
 import { processPhoto } from '../services/image.js';
 
-const MAX_SIZE = 10 * 1024 * 1024;
+const MAX_SIZE = 25 * 1024 * 1024;
 
 const presignSchema = z.object({
   filename:    z.string().min(1).max(255),
@@ -29,7 +29,7 @@ export async function getUploadPage(req, res, next) {
     const allCollections = await db.select({ id: collections.id, name: collections.name })
       .from(collections)
       .orderBy(asc(collections.displayOrder));
-    res.render('admin/upload', { title: 'Subir fotos — Admin', collections: allCollections });
+    res.render('admin/upload', { title: res.locals.t.meta.adminUpload, collections: allCollections });
   } catch (err) {
     next(err);
   }

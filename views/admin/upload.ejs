@@ -2,7 +2,7 @@
 <%- include('../partials/admin-nav') %>
 
 <main class="admin-main">
-  <h1 class="admin-page-title">Subir fotos</h1>
+  <h1 class="admin-page-title"><%= t.admin.nav.upload %></h1>
 
   <div class="upload-zone" id="upload-zone">
     <div class="upload-zone__inner">
@@ -11,8 +11,8 @@
         <polyline points="17 8 12 3 7 8"/>
         <line x1="12" y1="3" x2="12" y2="15"/>
       </svg>
-      <p>Arrastra fotos aquí o <label class="upload-zone__browse" for="file-input">selecciona archivos</label></p>
-      <p class="upload-zone__hint">JPEG o PNG · máx 10 MB por archivo</p>
+      <p><%= t.admin.upload.dragHint %> <label class="upload-zone__browse" for="file-input"><%= t.admin.upload.browse %></label></p>
+      <p class="upload-zone__hint"><%= t.admin.upload.hint %></p>
     </div>
     <input type="file" id="file-input" accept="image/jpeg,image/png" multiple hidden>
   </div>
@@ -26,28 +26,28 @@
         <p class="upload-item__filename"></p>
         <div class="upload-item__fields">
           <div class="form-group">
-            <label class="form-label">Título</label>
+            <label class="form-label"><%= t.admin.upload.titleField %></label>
             <input class="form-input" type="text" name="title" placeholder="Opcional">
           </div>
           <div class="form-group">
-            <label class="form-label">Ubicación</label>
+            <label class="form-label"><%= t.admin.upload.location %></label>
             <input class="form-input" type="text" name="location" placeholder="Opcional">
           </div>
           <div class="form-group">
-            <label class="form-label">Fecha</label>
+            <label class="form-label"><%= t.admin.upload.date %></label>
             <input class="form-input" type="date" name="shotAt">
           </div>
           <div class="form-group">
             <label class="form-label">Colección</label>
             <select class="form-input" name="collectionId">
-              <option value="">— Sin colección —</option>
+              <option value=""><%= t.admin.upload.noCollection %></option>
               <% collections.forEach(col => { %>
                 <option value="<%= col.id %>"><%= col.name %></option>
               <% }) %>
             </select>
           </div>
           <div class="form-group form-group--full">
-            <label class="form-label">Tags (separados por coma)</label>
+            <label class="form-label"><%= t.admin.upload.tags %></label>
             <input class="form-input" type="text" name="tags" placeholder="paisaje, panama, calle">
           </div>
         </div>
@@ -63,9 +63,23 @@
   </template>
 
   <div class="upload-footer" id="upload-footer" hidden>
-    <button class="btn btn--primary" id="upload-all-btn">Subir todas</button>
+    <button class="btn btn--primary" id="upload-all-btn"><%= t.admin.upload.uploadAll %></button>
   </div>
 </main>
+
+<script type="application/json" id="upload-i18n">
+<%- JSON.stringify({
+  getting: t.admin.upload.getting,
+  uploading: t.admin.upload.uploading,
+  processing: t.admin.upload.processing,
+  done: t.admin.upload.done,
+  errStart: t.admin.upload.errStart,
+  errS3: t.admin.upload.errS3,
+  errComplete: t.admin.upload.errComplete,
+  onlyJpegPng: t.admin.upload.onlyJpegPng,
+  maxSize: t.admin.upload.maxSize,
+}).replace(/</g, '\\u003c') %>
+</script>
 
 <script type="module" src="/dist/upload.js"></script>
 <script type="module" src="/dist/admin.js"></script>

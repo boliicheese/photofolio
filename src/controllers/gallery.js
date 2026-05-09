@@ -12,13 +12,11 @@ export async function getGallery(req, res, next) {
     const photosWithUrls = await Promise.all(rows.map(async (p) => ({
       ...p,
       thumbUrl:    getPublicUrl(p.s3KeyThumb),
-      mediumUrl:   getPublicUrl(p.s3KeyMedium),
-      fullUrl:     getPublicUrl(p.s3KeyFull),
       originalUrl: await presignGet(p.s3KeyOriginal),
     })));
 
     res.render('gallery', {
-      title: 'Galería — Bolivar Barrios',
+      title: res.locals.t.meta.gallery,
       photos: photosWithUrls,
     });
   } catch (err) {

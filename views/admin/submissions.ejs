@@ -2,10 +2,10 @@
 <%- include('../partials/admin-nav') %>
 
 <main class="admin-main">
-  <h1 class="admin-page-title">Mensajes</h1>
+  <h1 class="admin-page-title"><%= t.admin.nav.messages %></h1>
 
   <% if (submissions.length === 0) { %>
-    <div class="empty-state"><p>No hay mensajes todavía.</p></div>
+    <div class="empty-state"><p><%= t.admin.submissions.empty %></p></div>
   <% } else { %>
     <div class="submission-list">
       <% submissions.forEach(sub => { %>
@@ -18,10 +18,10 @@
             </div>
             <div class="submission-item__meta">
               <time datetime="<%= sub.createdAt.toISOString() %>">
-                <%= sub.createdAt.toLocaleDateString('es-PA', { day: 'numeric', month: 'short', year: 'numeric' }) %>
+                <%= sub.createdAt.toLocaleDateString(lang === 'es' ? 'es-PA' : 'en-US', { day: 'numeric', month: 'short', year: 'numeric' }) %>
               </time>
               <% if (!sub.readAt) { %>
-                <button class="btn btn--ghost btn--sm js-mark-read" data-id="<%= sub.id %>">Marcar leído</button>
+                <button class="btn btn--ghost btn--sm js-mark-read" data-id="<%= sub.id %>"><%= t.admin.submissions.markRead %></button>
               <% } %>
             </div>
           </div>

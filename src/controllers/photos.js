@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { db } from '../db/client.js';
 import { photos, tags, photoTags, photoCollections, collections } from '../db/schema.js';
 import { eq, asc } from 'drizzle-orm';
-import { deleteObjects, getPublicUrl } from '../services/s3.js';
+import { deleteObjects, getPublicUrl, presignGet } from '../services/s3.js';
 
 export async function getPhotoList(req, res, next) {
   try {
@@ -11,9 +11,17 @@ export async function getPhotoList(req, res, next) {
       db.select().from(collections).orderBy(asc(collections.displayOrder)),
     ]);
 
+    const photosWithUrls = await Promise.all(
+      allPhotos.map(async (p) => ({
+        ...p,
+        thumbUrl:   getPublicUrl(p.s3KeyThumb),
+        mediumUrl:  await presignGet(p.s3KeyMedium),
+      }))
+    );
+
     res.render('admin/photos', {
       title: 'Fotos — Admin',
-      photos: allPhotos.map((p) => ({ ...p, thumbUrl: getPublicUrl(p.s3KeyThumb) })),
+      photos: photosWithUrls,
       collections: allCollections,
     });
   } catch (err) {

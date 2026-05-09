@@ -34,6 +34,7 @@ export function createApp() {
       },
     },
     crossOriginEmbedderPolicy: false,
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
   }));
 
   // ── Parsing ───────────────────────────────────────────────────────────────

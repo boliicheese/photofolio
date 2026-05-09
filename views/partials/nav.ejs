@@ -1,0 +1,9 @@
+<header class="nav<%= typeof heroNav !== 'undefined' && heroNav ? ' nav--hero' : '' %>" id="site-nav">
+  <a class="nav__logo" href="/">BB</a>
+  <nav class="nav__links">
+    <a href="/gallery" class="<%= typeof currentPath !== 'undefined' && currentPath === '/gallery' ? 'nav__link nav__link--active' : 'nav__link' %>">Galería</a>
+    <a href="/collections" class="<%= typeof currentPath !== 'undefined' && currentPath === '/collections' ? 'nav__link nav__link--active' : 'nav__link' %>">Colecciones</a>
+    <a href="/about" class="<%= typeof currentPath !== 'undefined' && currentPath === '/about' ? 'nav__link nav__link--active' : 'nav__link' %>">About</a>
+    <a href="/contact" class="<%= typeof currentPath !== 'undefined' && currentPath === '/contact' ? 'nav__link nav__link--active' : 'nav__link' %>">Contacto</a>
+  </nav>
+</header>

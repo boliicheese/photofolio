@@ -1,0 +1,31 @@
+<%- include('../partials/head', { title, bodyClass: 'admin-body' }) %>
+<%- include('../partials/admin-nav') %>
+
+<main class="admin-main">
+  <h1 class="admin-page-title">Dashboard</h1>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-card__number"><%= photoCount %></span>
+      <span class="stat-card__label">fotos</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__number"><%= collectionCount %></span>
+      <span class="stat-card__label">colecciones</span>
+    </div>
+    <div class="stat-card<%= unreadCount > 0 ? ' stat-card--alert' : '' %>">
+      <span class="stat-card__number"><%= unreadCount %></span>
+      <span class="stat-card__label">mensajes sin leer</span>
+    </div>
+  </div>
+
+  <div class="dashboard-actions">
+    <a href="/admin/photos/upload" class="btn btn--primary">Subir fotos</a>
+    <a href="/admin/submissions" class="btn btn--ghost">Ver mensajes</a>
+    <a href="/" class="btn btn--ghost" target="_blank">Ver sitio →</a>
+  </div>
+</main>
+
+<script type="module" src="/dist/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav', { heroNav: true }) %>
+
+<main>
+  <section class="hero">
+    <% if (featured) { %>
+      <img
+        class="hero__img"
+        src="<%= featured.originalUrl %>"
+        alt="<%= featured.title || 'Featured photo' %>"
+        loading="eager"
+        draggable="false"
+      >
+    <% } else { %>
+      <div class="hero__placeholder"></div>
+    <% } %>
+
+    <div class="hero__text">
+      <h1 class="hero__name">Bolivar Barrios</h1>
+      <p class="hero__tagline">Fotografía desde Panamá.</p>
+    </div>
+
+    <div class="hero__scroll-cue" aria-hidden="true">
+      <svg width="20" height="28" viewBox="0 0 20 28" fill="none">
+        <rect x="1" y="1" width="18" height="26" rx="9" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="10" y1="7" x2="10" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="home-intro">
+    <a href="/gallery" class="home-intro__link">Ver galería →</a>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

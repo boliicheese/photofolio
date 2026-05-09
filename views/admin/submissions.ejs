@@ -1,0 +1,39 @@
+<%- include('../partials/head', { title, bodyClass: 'admin-body' }) %>
+<%- include('../partials/admin-nav') %>
+
+<main class="admin-main">
+  <h1 class="admin-page-title">Mensajes</h1>
+
+  <% if (submissions.length === 0) { %>
+    <div class="empty-state"><p>No hay mensajes todavía.</p></div>
+  <% } else { %>
+    <div class="submission-list">
+      <% submissions.forEach(sub => { %>
+        <div class="submission-item<%= !sub.readAt ? ' submission-item--unread' : '' %>" data-id="<%= sub.id %>">
+          <div class="submission-item__header">
+            <div class="submission-item__sender">
+              <% if (!sub.readAt) { %><span class="unread-dot" aria-label="Sin leer"></span><% } %>
+              <strong><%= sub.name %></strong>
+              <a href="mailto:<%= sub.email %>" class="submission-item__email"><%= sub.email %></a>
+            </div>
+            <div class="submission-item__meta">
+              <time datetime="<%= sub.createdAt.toISOString() %>">
+                <%= sub.createdAt.toLocaleDateString('es-PA', { day: 'numeric', month: 'short', year: 'numeric' }) %>
+              </time>
+              <% if (!sub.readAt) { %>
+                <button class="btn btn--ghost btn--sm js-mark-read" data-id="<%= sub.id %>">Marcar leído</button>
+              <% } %>
+            </div>
+          </div>
+          <div class="submission-item__message">
+            <p><%= sub.message %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</main>
+
+<script type="module" src="/dist/admin.js"></script>
+</body>
+</html>

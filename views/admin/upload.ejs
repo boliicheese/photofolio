@@ -1,0 +1,73 @@
+<%- include('../partials/head', { title, bodyClass: 'admin-body' }) %>
+<%- include('../partials/admin-nav') %>
+
+<main class="admin-main">
+  <h1 class="admin-page-title">Subir fotos</h1>
+
+  <div class="upload-zone" id="upload-zone">
+    <div class="upload-zone__inner">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <p>Arrastra fotos aquí o <label class="upload-zone__browse" for="file-input">selecciona archivos</label></p>
+      <p class="upload-zone__hint">JPEG o PNG · máx 10 MB por archivo</p>
+    </div>
+    <input type="file" id="file-input" accept="image/jpeg,image/png" multiple hidden>
+  </div>
+
+  <div class="upload-list" id="upload-list"></div>
+
+  <template id="upload-item-tpl">
+    <div class="upload-item" data-file-id="">
+      <img class="upload-item__preview" src="" alt="">
+      <div class="upload-item__body">
+        <p class="upload-item__filename"></p>
+        <div class="upload-item__fields">
+          <div class="form-group">
+            <label class="form-label">Título</label>
+            <input class="form-input" type="text" name="title" placeholder="Opcional">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ubicación</label>
+            <input class="form-input" type="text" name="location" placeholder="Opcional">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Fecha</label>
+            <input class="form-input" type="date" name="shotAt">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Colección</label>
+            <select class="form-input" name="collectionId">
+              <option value="">— Sin colección —</option>
+              <% collections.forEach(col => { %>
+                <option value="<%= col.id %>"><%= col.name %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="form-group form-group--full">
+            <label class="form-label">Tags (separados por coma)</label>
+            <input class="form-input" type="text" name="tags" placeholder="paisaje, panama, calle">
+          </div>
+        </div>
+        <div class="upload-item__progress" hidden>
+          <div class="progress-bar">
+            <div class="progress-bar__fill" style="width: 0%"></div>
+          </div>
+          <span class="upload-item__status"></span>
+        </div>
+      </div>
+      <button class="upload-item__remove btn btn--ghost btn--sm" type="button">✕</button>
+    </div>
+  </template>
+
+  <div class="upload-footer" id="upload-footer" hidden>
+    <button class="btn btn--primary" id="upload-all-btn">Subir todas</button>
+  </div>
+</main>
+
+<script type="module" src="/dist/upload.js"></script>
+<script type="module" src="/dist/admin.js"></script>
+</body>
+</html>

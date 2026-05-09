@@ -1,0 +1,37 @@
+{
+  "name": "photofolio",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --ext js,ejs src/server.js",
+    "start": "node src/server.js",
+    "build": "vite build",
+    "migrate:generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate",
+    "seed": "node scripts/seed-admin.js",
+    "reprocess": "node scripts/reprocess-photos.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0",
+    "@aws-sdk/client-ses": "^3.600.0",
+    "@aws-sdk/s3-request-presigner": "^3.600.0",
+    "bcrypt": "^5.1.1",
+    "connect-pg-simple": "^9.0.1",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.32.0",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "express-session": "^1.18.1",
+    "helmet": "^7.1.0",
+    "pg": "^8.12.0",
+    "postgres": "^3.4.4",
+    "sharp": "^0.33.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.23.0",
+    "nodemon": "^3.1.4",
+    "vite": "^5.3.1"
+  }
+}

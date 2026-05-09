@@ -1,0 +1,56 @@
+<%- include('../partials/head', { title, bodyClass: 'admin-body' }) %>
+<%- include('../partials/admin-nav') %>
+
+<main class="admin-main">
+  <div class="admin-page-header">
+    <h1 class="admin-page-title">Colecciones</h1>
+    <button class="btn btn--primary btn--sm" id="new-collection-btn">+ Nueva</button>
+  </div>
+
+  <form class="collection-form js-collection-form" id="new-collection-form" hidden>
+    <div class="photo-edit-grid">
+      <div class="form-group">
+        <label class="form-label">Nombre</label>
+        <input class="form-input" type="text" name="name" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Slug (URL)</label>
+        <input class="form-input" type="text" name="slug" pattern="[a-z0-9-]+" placeholder="mi-coleccion" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Orden</label>
+        <input class="form-input" type="number" name="displayOrder" value="0">
+      </div>
+      <div class="form-group form-group--full">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-input form-textarea" name="description" rows="2"></textarea>
+      </div>
+    </div>
+    <div class="photo-edit-form__actions">
+      <button class="btn btn--primary btn--sm" type="submit">Crear</button>
+      <button class="btn btn--ghost btn--sm" type="button" id="cancel-new-collection">Cancelar</button>
+    </div>
+  </form>
+
+  <div class="collection-list">
+    <% if (collections.length === 0) { %>
+      <div class="empty-state"><p>No hay colecciones todavía.</p></div>
+    <% } else { %>
+      <% collections.forEach(col => { %>
+        <div class="collection-row" data-id="<%= col.id %>">
+          <div class="collection-row__info">
+            <strong><%= col.name %></strong>
+            <span class="collection-row__slug">/<%= col.slug %></span>
+          </div>
+          <div class="collection-row__actions">
+            <button class="btn btn--ghost btn--sm js-delete-collection" data-id="<%= col.id %>">Eliminar</button>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</main>
+
+<script type="module" src="/dist/admin.js"></script>
+</body>
+</html>

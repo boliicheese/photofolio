@@ -1,0 +1,41 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav', { currentPath: '/gallery' }) %>
+
+<main class="page-gallery">
+  <% if (photos.length === 0) { %>
+    <div class="empty-state">
+      <p>La galería está vacía por el momento.</p>
+    </div>
+  <% } else { %>
+    <div class="gallery-grid" id="gallery-grid">
+      <% photos.forEach((photo, i) => { %>
+        <button
+          class="gallery-item"
+          data-index="<%= i %>"
+          aria-label="<%= photo.title || 'Ver foto' %>"
+          style="--ar-ratio: <%= photo.originalHeight && photo.originalWidth ? photo.originalWidth + '/' + photo.originalHeight : '3/2' %>"
+        >
+          <img
+            class="gallery-item__img"
+            src="<%= photo.thumbUrl %>"
+            alt="<%= photo.title || '' %>"
+            loading="lazy"
+            draggable="false"
+          >
+        </button>
+      <% }) %>
+    </div>
+  <% } %>
+</main>
+
+<!-- Photo data for lightbox -->
+<script type="application/json" id="gallery-data">
+<%- JSON.stringify(photos.map(p => ({
+  title:       p.title,
+  location:    p.location,
+  shotAt:      p.shotAt,
+  originalUrl: p.originalUrl,
+}))).replace(/</g, '\\u003c') %>
+</script>
+
+<%- include('partials/footer') %>

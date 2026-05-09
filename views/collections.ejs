@@ -1,0 +1,32 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav', { currentPath: '/collections' }) %>
+
+<main class="page-text">
+  <h1 class="page-title">Colecciones</h1>
+
+  <% if (collections.length === 0) { %>
+    <div class="empty-state">
+      <p>No hay colecciones todavía.</p>
+    </div>
+  <% } else { %>
+    <div class="collections-grid">
+      <% collections.forEach(col => { %>
+        <a href="/collections/<%= col.slug %>" class="collection-card">
+          <div class="collection-card__cover">
+            <% if (col.coverUrl) { %>
+              <img src="<%= col.coverUrl %>" alt="<%= col.name %>" loading="lazy">
+            <% } else { %>
+              <div class="collection-card__no-cover"></div>
+            <% } %>
+          </div>
+          <div class="collection-card__meta">
+            <span class="collection-card__name"><%= col.name %></span>
+            <span class="collection-card__count"><%= col.photoCount %> foto<%= col.photoCount !== 1 ? 's' : '' %></span>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>

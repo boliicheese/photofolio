@@ -5,7 +5,7 @@ const base = process.env.DATABASE_URL ||
   `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT || 5432}/${process.env.DB_NAME}`;
 
 const url = process.env.NODE_ENV === 'production'
-  ? base + (base.includes('?') ? '&' : '?') + 'sslmode=require'
+  ? base + (base.includes('?') ? '&' : '?') + 'sslmode=no-verify'
   : base;
 
 export default defineConfig({

@@ -18,7 +18,7 @@ export const i18n = {
       home:               'Bolivar Barrios — Fotografía desde Panamá',
       gallery:            'Galería — Bolivar Barrios',
       collections:        'Colecciones — Bolivar Barrios',
-      about:              'About — Bolivar Barrios',
+      about:              'Sobre mí — Bolivar Barrios',
       contact:            'Contacto — Bolivar Barrios',
       adminLogin:         'Login — Admin',
       adminDashboard:     'Dashboard — Admin',
@@ -29,7 +29,7 @@ export const i18n = {
       adminCarousel:      'Carrusel — Admin',
     },
     nav: {
-      gallery: 'Galería', collections: 'Colecciones', about: 'About', contact: 'Contacto',
+      gallery: 'Galería', collections: 'Colecciones', about: 'Sobre mí', contact: 'Contacto',
     },
     home: {
       tagline: 'Fotografía desde Panamá.', viewGallery: 'Ver galería →',

@@ -2,7 +2,6 @@ const dataEl = document.getElementById('gallery-data');
 if (!dataEl) throw new Error('No gallery data');
 
 const photos  = JSON.parse(dataEl.textContent);
-const cache   = new Map(); // id → presigned url
 const lang    = document.documentElement.lang || 'es';
 let current   = 0;
 
@@ -50,21 +49,13 @@ function resetZoom() {
   setTimeout(() => { img.style.transition = ''; }, 200);
 }
 
-// ── Fetch / render ─────────────────────────────────────────────────────────
-async function fetchUrl(id) {
-  if (cache.has(id)) return cache.get(id);
-  const res = await fetch(`/api/photos/${id}/original`);
-  const { url } = await res.json();
-  cache.set(id, url);
-  return url;
-}
-
-async function render() {
+// ── Render ─────────────────────────────────────────────────────────────────
+function render() {
   const p = photos[current];
-  img.src = '';
   img.style.transform = '';
   scale = 1; panX = 0; panY = 0;
   img.alt             = p.title || '';
+  img.src             = p.mediumUrl;
   titleEl.textContent = p.title || '';
   locEl.textContent   = p.location || '';
   dateEl.textContent  = p.shotAt
@@ -74,9 +65,6 @@ async function render() {
       )
     : '';
   countEl.textContent = `${current + 1} / ${photos.length}`;
-
-  const url = await fetchUrl(p.id);
-  if (photos[current]?.id === p.id) img.src = url;
 }
 
 function open(idx) {
@@ -113,7 +101,6 @@ function getTouchDist(touches) {
 }
 
 function clampPan(s) {
-  // how many px the image overflows the wrap at this scale
   const overflowX = Math.max(0, (imgWrap.clientWidth  * (s - 1)) / 2);
   const overflowY = Math.max(0, (imgWrap.clientHeight * (s - 1)) / 2);
   panX = Math.max(-overflowX, Math.min(overflowX, panX));
@@ -146,7 +133,6 @@ imgWrap.addEventListener('touchmove', (e) => {
     clampPan(scale);
     applyTransform();
   } else if (e.touches.length === 1 && scale > 1) {
-    // pan while zoomed
     e.preventDefault();
     panX = panOriginX + (e.touches[0].clientX - panStartX);
     panY = panOriginY + (e.touches[0].clientY - panStartY);
@@ -158,13 +144,10 @@ imgWrap.addEventListener('touchmove', (e) => {
 imgWrap.addEventListener('touchend', (e) => {
   if (isPinching && e.touches.length < 2) {
     isPinching = false;
-    // snap back if nearly at 1×
     if (scale < 1.1) resetZoom();
     return;
   }
-
-  if (scale > 1) return; // don't navigate while zoomed
-
+  if (scale > 1) return;
   const dx = e.changedTouches[0].clientX - touchStartX;
   const dy = e.changedTouches[0].clientY - touchStartY;
   if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {

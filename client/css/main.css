@@ -135,6 +135,8 @@ p + p { margin-top: 1em; }
   height: 100%;
   object-fit: cover;
   object-position: center;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 .hero__placeholder {
   position: absolute;
@@ -267,6 +269,8 @@ p + p { margin-top: 1em; }
   height: 100%;
   object-fit: cover;
   transition: transform calc(var(--dur) * 2) var(--ease);
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 .gallery-item:hover .gallery-item__img { transform: scale(1.03); }
 .gallery-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -307,6 +311,8 @@ p + p { margin-top: 1em; }
   object-fit: contain;
   border-radius: var(--radius);
   will-change: transform;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 .lightbox__meta {
   position: absolute;

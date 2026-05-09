@@ -27,12 +27,30 @@ lb.innerHTML = `
 `;
 document.body.appendChild(lb);
 
+const imgWrap = lb.querySelector('.lightbox__img-wrap');
 const img     = lb.querySelector('.lightbox__img');
 const titleEl = lb.querySelector('.lightbox__title');
 const locEl   = lb.querySelector('.lightbox__location');
 const dateEl  = lb.querySelector('.lightbox__date');
 const countEl = lb.querySelector('.lightbox__counter');
 
+// ── Zoom / pan state ───────────────────────────────────────────────────────
+let scale  = 1;
+let panX   = 0;
+let panY   = 0;
+
+function applyTransform() {
+  img.style.transform = `scale(${scale}) translate(${panX / scale}px, ${panY / scale}px)`;
+}
+
+function resetZoom() {
+  scale = 1; panX = 0; panY = 0;
+  img.style.transition = 'transform 0.2s ease-out';
+  applyTransform();
+  setTimeout(() => { img.style.transition = ''; }, 200);
+}
+
+// ── Fetch / render ─────────────────────────────────────────────────────────
 async function fetchUrl(id) {
   if (cache.has(id)) return cache.get(id);
   const res = await fetch(`/api/photos/${id}/original`);
@@ -44,7 +62,9 @@ async function fetchUrl(id) {
 async function render() {
   const p = photos[current];
   img.src = '';
-  img.alt         = p.title || '';
+  img.style.transform = '';
+  scale = 1; panX = 0; panY = 0;
+  img.alt             = p.title || '';
   titleEl.textContent = p.title || '';
   locEl.textContent   = p.location || '';
   dateEl.textContent  = p.shotAt
@@ -75,7 +95,84 @@ function close() {
 function prev() { current = (current - 1 + photos.length) % photos.length; render(); }
 function next() { current = (current + 1) % photos.length; render(); }
 
-// ── Events ─────────────────────────────────────────────────────────────────
+// ── Touch gestures ─────────────────────────────────────────────────────────
+let touchStartX = 0;
+let touchStartY = 0;
+let pinchStartDist = 0;
+let pinchStartScale = 1;
+let panStartX = 0;
+let panStartY = 0;
+let panOriginX = 0;
+let panOriginY = 0;
+let isPinching = false;
+
+function getTouchDist(touches) {
+  const dx = touches[1].clientX - touches[0].clientX;
+  const dy = touches[1].clientY - touches[0].clientY;
+  return Math.hypot(dx, dy);
+}
+
+function clampPan(s) {
+  // how many px the image overflows the wrap at this scale
+  const overflowX = Math.max(0, (imgWrap.clientWidth  * (s - 1)) / 2);
+  const overflowY = Math.max(0, (imgWrap.clientHeight * (s - 1)) / 2);
+  panX = Math.max(-overflowX, Math.min(overflowX, panX));
+  panY = Math.max(-overflowY, Math.min(overflowY, panY));
+}
+
+imgWrap.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 1) {
+    isPinching = false;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    panStartX = e.touches[0].clientX;
+    panStartY = e.touches[0].clientY;
+    panOriginX = panX;
+    panOriginY = panY;
+  } else if (e.touches.length === 2) {
+    isPinching = true;
+    pinchStartDist  = getTouchDist(e.touches);
+    pinchStartScale = scale;
+    e.preventDefault();
+  }
+}, { passive: false });
+
+imgWrap.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 2 && isPinching) {
+    e.preventDefault();
+    const dist     = getTouchDist(e.touches);
+    const newScale = Math.min(3, Math.max(1, pinchStartScale * (dist / pinchStartDist)));
+    scale = newScale;
+    clampPan(scale);
+    applyTransform();
+  } else if (e.touches.length === 1 && scale > 1) {
+    // pan while zoomed
+    e.preventDefault();
+    panX = panOriginX + (e.touches[0].clientX - panStartX);
+    panY = panOriginY + (e.touches[0].clientY - panStartY);
+    clampPan(scale);
+    applyTransform();
+  }
+}, { passive: false });
+
+imgWrap.addEventListener('touchend', (e) => {
+  if (isPinching && e.touches.length < 2) {
+    isPinching = false;
+    // snap back if nearly at 1×
+    if (scale < 1.1) resetZoom();
+    return;
+  }
+
+  if (scale > 1) return; // don't navigate while zoomed
+
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+    dx < 0 ? next() : prev();
+  }
+});
+
+// ── Keyboard & click events ────────────────────────────────────────────────
 lb.querySelector('.lightbox__close').addEventListener('click', close);
 lb.querySelector('.lightbox__prev').addEventListener('click', prev);
 lb.querySelector('.lightbox__next').addEventListener('click', next);

@@ -1,8 +1,12 @@
 import { defineConfig } from 'drizzle-kit';
 import 'dotenv/config';
 
-const url = process.env.DATABASE_URL ||
+const base = process.env.DATABASE_URL ||
   `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT || 5432}/${process.env.DB_NAME}`;
+
+const url = process.env.NODE_ENV === 'production'
+  ? base + (base.includes('?') ? '&' : '?') + 'sslmode=require'
+  : base;
 
 export default defineConfig({
   schema: './src/db/schema.js',

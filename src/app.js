@@ -67,7 +67,7 @@ export function createApp() {
     saveUninitialized: false,
     name: 'sid',
     cookie: {
-      secure:   process.env.NODE_ENV === 'production',
+      secure:   process.env.HTTPS_ENABLED === 'true',
       httpOnly: true,
       maxAge:   7 * 24 * 60 * 60 * 1000,
       sameSite: 'lax',

@@ -58,24 +58,21 @@ p + p { margin-top: 1em; }
   padding: 0 clamp(1rem, 4vw, 2.5rem);
   height: 56px;
   background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  border-bottom: none;
+  transition: background var(--dur) var(--ease);
 }
 .nav--hero {
   background: transparent;
-  border-color: transparent;
   color: #fff;
 }
 .nav--hero.nav--scrolled {
   background: var(--bg);
-  border-color: var(--border);
   color: var(--fg);
 }
 .nav--admin {
   position: sticky;
   top: 0;
   background: var(--bg);
-  border-color: var(--border);
   color: var(--fg);
 }
 .nav__logo {

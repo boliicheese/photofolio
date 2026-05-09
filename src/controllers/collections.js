@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { db } from '../db/client.js';
 import { photos, collections, photoCollections } from '../db/schema.js';
 import { eq, asc, count } from 'drizzle-orm';
-import { getPublicUrl, presignGet } from '../services/s3.js';
+import { getPublicUrl } from '../services/s3.js';
 
 // ── Public ────────────────────────────────────────────────────────────────────
 
@@ -22,6 +22,15 @@ export async function getCollections(req, res, next) {
           const [cover] = await db.select({ key: photos.s3KeyThumb })
             .from(photos).where(eq(photos.id, col.coverPhotoId)).limit(1);
           if (cover) coverUrl = getPublicUrl(cover.key);
+        }
+        if (!coverUrl) {
+          const [first] = await db.select({ key: photos.s3KeyThumb })
+            .from(photoCollections)
+            .innerJoin(photos, eq(photoCollections.photoId, photos.id))
+            .where(eq(photoCollections.collectionId, col.id))
+            .orderBy(asc(photos.displayOrder), asc(photos.createdAt))
+            .limit(1);
+          if (first) coverUrl = getPublicUrl(first.key);
         }
 
         return { ...col, photoCount: Number(total), coverUrl };
@@ -47,13 +56,10 @@ export async function getCollection(req, res, next) {
       .where(eq(photoCollections.collectionId, col.id))
       .orderBy(asc(photos.displayOrder), asc(photos.createdAt));
 
-    const photosWithUrls = await Promise.all(rows.map(async ({ photo: p }) => ({
+    const photosWithUrls = rows.map(({ photo: p }) => ({
       ...p,
-      thumbUrl:    getPublicUrl(p.s3KeyThumb),
-      mediumUrl:   getPublicUrl(p.s3KeyMedium),
-      fullUrl:     getPublicUrl(p.s3KeyFull),
-      originalUrl: await presignGet(p.s3KeyOriginal),
-    })));
+      thumbUrl: getPublicUrl(p.s3KeyThumb),
+    }));
 
     res.render('collection', {
       title: `${col.name} — Bolivar Barrios`,

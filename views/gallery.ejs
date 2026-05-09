@@ -7,7 +7,7 @@
       <p><%= t.gallery.empty %></p>
     </div>
   <% } else { %>
-    <div class="gallery-grid" id="gallery-grid">
+    <div class="gallery-grid" id="gallery-grid" data-view-photo-label="<%= t.gallery.viewPhoto %>">
       <% photos.forEach((photo, i) => { %>
         <button
           class="gallery-item"
@@ -25,15 +25,29 @@
         </button>
       <% }) %>
     </div>
+
+    <% if (hasMore) { %>
+      <div class="gallery-more" id="gallery-more">
+        <button
+          class="btn btn--ghost"
+          id="load-more-btn"
+          data-offset="<%= photos.length %>"
+          data-label="<%= t.gallery.loadMore %>"
+          data-loading="<%= t.gallery.loading %>"
+        ><%= t.gallery.loadMore %></button>
+      </div>
+    <% } %>
   <% } %>
 </main>
 
 <script type="application/json" id="gallery-data">
 <%- JSON.stringify(photos.map(p => ({
-  title:       p.title,
-  location:    p.location,
-  shotAt:      p.shotAt,
-  originalUrl: p.originalUrl,
+  id:             p.id,
+  title:          p.title,
+  location:       p.location,
+  shotAt:         p.shotAt,
+  originalWidth:  p.originalWidth,
+  originalHeight: p.originalHeight,
 }))).replace(/</g, '\\u003c') %>
 </script>
 

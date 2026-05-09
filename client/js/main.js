@@ -5,6 +5,10 @@ if (document.getElementById('gallery-data')) {
   import('./lightbox.js');
 }
 
+if (document.getElementById('load-more-btn')) {
+  import('./gallery-more.js');
+}
+
 if (document.querySelectorAll('.hero__slide').length > 1) {
   import('./carousel.js');
 }

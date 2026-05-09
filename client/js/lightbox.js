@@ -1,8 +1,10 @@
 const dataEl = document.getElementById('gallery-data');
 if (!dataEl) throw new Error('No gallery data');
 
-const photos = JSON.parse(dataEl.textContent);
-let current = 0;
+const photos  = JSON.parse(dataEl.textContent);
+const cache   = new Map(); // id → presigned url
+const lang    = document.documentElement.lang || 'es';
+let current   = 0;
 
 // ── Build DOM ──────────────────────────────────────────────────────────────
 const lb = document.createElement('div');
@@ -25,22 +27,36 @@ lb.innerHTML = `
 `;
 document.body.appendChild(lb);
 
-const img      = lb.querySelector('.lightbox__img');
-const titleEl  = lb.querySelector('.lightbox__title');
-const locEl    = lb.querySelector('.lightbox__location');
-const dateEl   = lb.querySelector('.lightbox__date');
-const countEl  = lb.querySelector('.lightbox__counter');
+const img     = lb.querySelector('.lightbox__img');
+const titleEl = lb.querySelector('.lightbox__title');
+const locEl   = lb.querySelector('.lightbox__location');
+const dateEl  = lb.querySelector('.lightbox__date');
+const countEl = lb.querySelector('.lightbox__counter');
 
-function render() {
+async function fetchUrl(id) {
+  if (cache.has(id)) return cache.get(id);
+  const res = await fetch(`/api/photos/${id}/original`);
+  const { url } = await res.json();
+  cache.set(id, url);
+  return url;
+}
+
+async function render() {
   const p = photos[current];
-  img.src = p.originalUrl;
-  img.alt = p.title || '';
-  titleEl.textContent  = p.title || '';
-  locEl.textContent    = p.location || '';
-  dateEl.textContent   = p.shotAt
-    ? new Date(p.shotAt + 'T00:00:00').toLocaleDateString('es-PA', { year: 'numeric', month: 'long' })
+  img.src = '';
+  img.alt         = p.title || '';
+  titleEl.textContent = p.title || '';
+  locEl.textContent   = p.location || '';
+  dateEl.textContent  = p.shotAt
+    ? new Date(p.shotAt + 'T00:00:00').toLocaleDateString(
+        lang === 'es' ? 'es-PA' : 'en-US',
+        { year: 'numeric', month: 'long' }
+      )
     : '';
-  countEl.textContent  = `${current + 1} / ${photos.length}`;
+  countEl.textContent = `${current + 1} / ${photos.length}`;
+
+  const url = await fetchUrl(p.id);
+  if (photos[current]?.id === p.id) img.src = url;
 }
 
 function open(idx) {
@@ -72,8 +88,15 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') next();
 });
 
-document.querySelectorAll('.gallery-item').forEach((el, i) => {
-  el.addEventListener('click', () => open(i));
+// Event delegation — works for dynamically added items too
+document.getElementById('gallery-grid')?.addEventListener('click', (e) => {
+  const item = e.target.closest('.gallery-item');
+  if (!item) return;
+  open(parseInt(item.dataset.index, 10));
 });
+
+export function addPhotos(newPhotos) {
+  photos.push(...newPhotos);
+}
 
 export { open, close };

@@ -36,6 +36,7 @@ export const i18n = {
     },
     gallery: {
       empty: 'La galería está vacía por el momento.', viewPhoto: 'Ver foto',
+      loadMore: 'Ver más fotos', loading: 'Cargando…',
     },
     collections: {
       title: 'Colecciones',
@@ -136,6 +137,7 @@ export const i18n = {
     },
     gallery: {
       empty: 'The gallery is empty for now.', viewPhoto: 'View photo',
+      loadMore: 'Load more', loading: 'Loading…',
     },
     collections: {
       title: 'Collections',

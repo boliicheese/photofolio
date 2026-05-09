@@ -13,7 +13,7 @@
   <% if (photos.length === 0) { %>
     <div class="empty-state"><p><%= t.collection.empty %></p></div>
   <% } else { %>
-    <div class="gallery-grid" id="gallery-grid">
+    <div class="gallery-grid" id="gallery-grid" data-view-photo-label="<%= t.gallery.viewPhoto %>">
       <% photos.forEach((photo, i) => { %>
         <button
           class="gallery-item"
@@ -36,10 +36,12 @@
 
 <script type="application/json" id="gallery-data">
 <%- JSON.stringify(photos.map(p => ({
-  title:       p.title,
-  location:    p.location,
-  shotAt:      p.shotAt,
-  originalUrl: p.originalUrl,
+  id:             p.id,
+  title:          p.title,
+  location:       p.location,
+  shotAt:         p.shotAt,
+  originalWidth:  p.originalWidth,
+  originalHeight: p.originalHeight,
 }))).replace(/</g, '\\u003c') %>
 </script>
 

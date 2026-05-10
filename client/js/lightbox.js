@@ -55,7 +55,7 @@ function render() {
   img.style.transform = '';
   scale = 1; panX = 0; panY = 0;
   img.alt             = p.title || '';
-  img.src             = p.mediumUrl;
+  img.src             = p.fullUrl;
   titleEl.textContent = p.title || '';
   locEl.textContent   = p.location || '';
   dateEl.textContent  = p.shotAt

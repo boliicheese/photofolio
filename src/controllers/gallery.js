@@ -20,7 +20,7 @@ export async function getGallery(req, res, next) {
       location:       p.location,
       shotAt:         p.shotAt,
       thumbUrl:       getPublicUrl(p.s3KeyThumb),
-      mediumUrl:      getPublicUrl(p.s3KeyMedium),
+      fullUrl:        getPublicUrl(p.s3KeyFull),
       originalWidth:  p.originalWidth,
       originalHeight: p.originalHeight,
     }));
@@ -55,7 +55,7 @@ export async function getGalleryMore(req, res, next) {
         location:       p.location,
         shotAt:         p.shotAt,
         thumbUrl:       getPublicUrl(p.s3KeyThumb),
-        mediumUrl:      getPublicUrl(p.s3KeyMedium),
+        fullUrl:        getPublicUrl(p.s3KeyFull),
         originalWidth:  p.originalWidth,
         originalHeight: p.originalHeight,
       })),

@@ -58,8 +58,8 @@ export async function getCollection(req, res, next) {
 
     const photosWithUrls = rows.map(({ photo: p }) => ({
       ...p,
-      thumbUrl:  getPublicUrl(p.s3KeyThumb),
-      mediumUrl: getPublicUrl(p.s3KeyMedium),
+      thumbUrl: getPublicUrl(p.s3KeyThumb),
+      fullUrl:  getPublicUrl(p.s3KeyFull),
     }));
 
     res.render('collection', {

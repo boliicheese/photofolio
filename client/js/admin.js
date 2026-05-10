@@ -1,3 +1,5 @@
+import './nav.js';
+
 const i18nEl = document.getElementById('admin-i18n');
 const i18n = i18nEl ? JSON.parse(i18nEl.textContent) : {};
 

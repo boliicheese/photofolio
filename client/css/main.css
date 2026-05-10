@@ -719,6 +719,17 @@ p + p { margin-top: 1em; }
   .nav--hero .nav__links { background: rgba(14,14,14,0.93); color: #fff; }
   /* Admin nav dropdown uses same fixed positioning as public nav */
   .nav--admin .nav__links { background: var(--bg); }
+  /* Badge flows inline inside the open dropdown */
+  .nav__badge {
+    position: relative;
+    top: auto;
+    right: auto;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+  }
+  /* Dot on burger is redundant once the menu is open */
+  .nav--open .nav__burger-dot { display: none; }
   /* Gallery */
   .gallery-grid { columns: 2 140px; }
   /* Forms */

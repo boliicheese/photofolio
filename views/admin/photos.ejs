@@ -26,10 +26,9 @@
           </div>
 
           <div class="photo-row__actions">
-            <a class="btn btn--ghost btn--sm" href="<%= photo.mediumUrl %>" target="_blank" rel="noopener" title="Ver con watermark">WM</a>
-            <a class="btn btn--ghost btn--sm" href="/admin/photos/<%= photo.id %>/download" title="Descargar original">↓</a>
-            <button class="btn btn--ghost btn--sm js-edit-photo" aria-expanded="false"><%= t.admin.photos.edit %></button>
-            <button class="btn btn--danger btn--sm js-delete-photo"><%= t.admin.photos.delete %></button>
+            <a class="btn btn--ghost btn--icon" href="/admin/photos/<%= photo.id %>/download" title="Descargar original" aria-label="Descargar original">↓</a>
+            <button class="btn btn--ghost btn--icon js-edit-photo" aria-expanded="false" title="<%= t.admin.photos.edit %>" aria-label="<%= t.admin.photos.edit %>"><%- include('../partials/icon-pencil') %></button>
+            <button class="btn btn--danger btn--icon js-delete-photo" title="<%= t.admin.photos.delete %>" aria-label="<%= t.admin.photos.delete %>"><%- include('../partials/icon-trash') %></button>
           </div>
 
           <form class="photo-edit-form js-photo-edit-form" data-id="<%= photo.id %>" hidden>

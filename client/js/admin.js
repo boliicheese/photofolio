@@ -75,6 +75,33 @@ document.querySelectorAll('.js-mark-read').forEach((btn) => {
   });
 });
 
+// ── Submissions: delete ────────────────────────────────────────────────────
+document.querySelectorAll('.js-delete-submission').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    if (!confirm('¿Eliminar este mensaje?')) return;
+    const id  = btn.dataset.id;
+    const res = await fetch(`/admin/submissions/${id}`, { method: 'DELETE' });
+    if (res.ok) {
+      const data = await res.json();
+      btn.closest('.submission-item').remove();
+      if (data.wasUnread) {
+        const badge = document.getElementById('unread-badge');
+        if (badge) {
+          const n = parseInt(badge.textContent, 10) - 1;
+          if (n <= 0) {
+            badge.remove();
+            document.getElementById('burger-unread-dot')?.remove();
+          } else {
+            badge.textContent = n;
+          }
+        }
+      }
+    } else {
+      alert('Error al eliminar el mensaje.');
+    }
+  });
+});
+
 // ── Collections ────────────────────────────────────────────────────────────
 const newBtn    = document.getElementById('new-collection-btn');
 const newForm   = document.getElementById('new-collection-form');

@@ -43,7 +43,7 @@
             <span class="collection-row__slug">/<%= col.slug %></span>
           </div>
           <div class="collection-row__actions">
-            <button class="btn btn--ghost btn--sm js-delete-collection" data-id="<%= col.id %>"><%= t.admin.collections.delete %></button>
+            <button class="btn btn--danger btn--icon js-delete-collection" data-id="<%= col.id %>" title="<%= t.admin.collections.delete %>" aria-label="<%= t.admin.collections.delete %>"><%- include('../partials/icon-trash') %></button>
           </div>
         </div>
       <% }) %>

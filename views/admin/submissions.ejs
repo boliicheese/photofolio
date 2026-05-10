@@ -23,6 +23,7 @@
               <% if (!sub.readAt) { %>
                 <button class="btn btn--ghost btn--sm js-mark-read" data-id="<%= sub.id %>"><%= t.admin.submissions.markRead %></button>
               <% } %>
+              <button class="btn btn--danger btn--icon js-delete-submission" data-id="<%= sub.id %>" title="Eliminar mensaje" aria-label="Eliminar mensaje"><%- include('../partials/icon-trash') %></button>
             </div>
           </div>
           <div class="submission-item__message">

@@ -13,7 +13,7 @@
         <div class="carousel-slot__header">
           <span class="carousel-slot__position"><%= t.admin.carousel.position %> <%= slot.position %></span>
           <% if (slot.photo) { %>
-            <button class="btn btn--danger btn--sm js-remove-slot"><%= t.admin.carousel.remove %></button>
+            <button class="btn btn--danger btn--icon js-remove-slot" title="<%= t.admin.carousel.remove %>" aria-label="<%= t.admin.carousel.remove %>"><%- include('../partials/icon-trash') %></button>
           <% } %>
         </div>
         <% if (slot.photo) { %>

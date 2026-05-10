@@ -476,6 +476,7 @@ p + p { margin-top: 1em; }
 .btn--danger   { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
 .btn--danger:hover { background: var(--danger); color: #fff; }
 .btn--sm       { padding: 0.4rem 0.85rem; font-size: 0.8rem; }
+.btn--icon     { width: 32px; height: 32px; padding: 0; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .btn--full     { width: 100%; }
 
 /* ─── Alerts ─────────────────────────────────────────────────────────────── */
@@ -730,6 +731,8 @@ p + p { margin-top: 1em; }
   }
   /* Dot on burger is redundant once the menu is open */
   .nav--open .nav__burger-dot { display: none; }
+  /* Admin photo row: actions drop to their own right-aligned row */
+  .photo-row__actions { width: 100%; justify-content: flex-end; }
   /* Gallery */
   .gallery-grid { columns: 2 140px; }
   /* Forms */

@@ -32,13 +32,19 @@ export async function processPhoto(photoId) {
   const originalBuffer = await getObject(`photos/${photoId}/original.jpg`);
   const meta = await sharp(originalBuffer).metadata();
 
+  // EXIF orientations 5–8 are 90°/270° rotations — width and height swap
+  const exifSwapped = meta.orientation >= 5 && meta.orientation <= 8;
+  const displayW = exifSwapped ? (meta.height ?? 0) : (meta.width ?? 0);
+  const displayH = exifSwapped ? (meta.width ?? 0) : (meta.height ?? 0);
+
   await Promise.all(
     VARIANTS.map(({ name, size, quality, watermark }) => {
       const pipeline = sharp(originalBuffer)
+        .rotate()
         .resize(size, size, { fit: 'inside', withoutEnlargement: true });
 
       if (watermark) {
-        const { w, h } = outputDims(meta.width, meta.height, size);
+        const { w, h } = outputDims(displayW, displayH, size);
         pipeline.composite([{ input: watermarkSvg(w, h), blend: 'over' }]);
       }
 
@@ -49,5 +55,5 @@ export async function processPhoto(photoId) {
     })
   );
 
-  return { width: meta.width ?? null, height: meta.height ?? null };
+  return { width: displayW || null, height: displayH || null };
 }

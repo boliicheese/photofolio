@@ -62,8 +62,12 @@ document.querySelectorAll('.js-mark-read').forEach((btn) => {
       const badge = document.getElementById('unread-badge');
       if (badge) {
         const n = parseInt(badge.textContent, 10) - 1;
-        if (n <= 0) badge.remove();
-        else badge.textContent = n;
+        if (n <= 0) {
+          badge.remove();
+          document.getElementById('burger-unread-dot')?.remove();
+        } else {
+          badge.textContent = n;
+        }
       }
     }
   });

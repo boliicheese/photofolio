@@ -98,7 +98,7 @@ p + p { margin-top: 1em; }
   min-width: 18px;
   height: 18px;
   padding: 0 4px;
-  background: #e53935;
+  background: #0E0E0E;
   color: #fff;
   font-size: 0.68rem;
   font-weight: 700;
@@ -125,9 +125,20 @@ p + p { margin-top: 1em; }
   background: none;
   border: none;
   color: inherit;
+  position: relative;
   -webkit-tap-highlight-color: transparent;
 }
 .nav__burger-line { display: block; width: 22px; height: 2px; background: currentColor; border-radius: 1px; transition: transform var(--dur), opacity var(--dur); }
+.nav__burger-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background: #0E0E0E;
+  border-radius: 50%;
+  pointer-events: none;
+}
 
 /* ─── Hero ───────────────────────────────────────────────────────────────── */
 .hero {
@@ -706,8 +717,8 @@ p + p { margin-top: 1em; }
   .nav__logout-form { width: 100%; }
   .nav__link-btn { width: 100%; padding: 0.85rem 1rem; text-align: center; font-size: 0.9rem; }
   .nav--hero .nav__links { background: rgba(14,14,14,0.93); color: #fff; }
-  /* Admin nav */
-  .nav--admin .nav__links { position: sticky; top: 56px; }
+  /* Admin nav dropdown uses same fixed positioning as public nav */
+  .nav--admin .nav__links { background: var(--bg); }
   /* Gallery */
   .gallery-grid { columns: 2 140px; }
   /* Forms */

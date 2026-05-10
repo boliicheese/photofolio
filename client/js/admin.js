@@ -58,6 +58,13 @@ document.querySelectorAll('.js-mark-read').forEach((btn) => {
       item.classList.remove('submission-item--unread');
       btn.remove();
       item.querySelector('.unread-dot')?.remove();
+
+      const badge = document.getElementById('unread-badge');
+      if (badge) {
+        const n = parseInt(badge.textContent, 10) - 1;
+        if (n <= 0) badge.remove();
+        else badge.textContent = n;
+      }
     }
   });
 });

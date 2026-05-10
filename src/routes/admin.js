@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { requireAuth } from '../middleware/requireAuth.js';
+import { adminStats } from '../middleware/adminStats.js';
 import { getLogin, postLogin, postLogout } from '../controllers/auth.js';
 import { getDashboard } from '../controllers/dashboard.js';
 import { getPhotoList, patchPhoto, deletePhoto, getPhotoOriginalDownload } from '../controllers/photos.js';
@@ -14,26 +15,27 @@ adminRouter.get('/login', getLogin);
 adminRouter.post('/login', postLogin);
 adminRouter.post('/logout', requireAuth, postLogout);
 
-adminRouter.get('/', requireAuth, getDashboard);
+adminRouter.use(requireAuth, adminStats);
 
-adminRouter.get('/photos', requireAuth, getPhotoList);
-adminRouter.get('/photos/upload', requireAuth, getUploadPage);
-adminRouter.get('/photos/:id/download', requireAuth, getPhotoOriginalDownload);
-adminRouter.patch('/photos/:id', requireAuth, patchPhoto);
-adminRouter.delete('/photos/:id', requireAuth, deletePhoto);
+adminRouter.get('/', getDashboard);
 
-// Upload JSON endpoints (kept under /admin for simplicity — auth via same middleware)
-adminRouter.post('/upload/presign', requireAuth, postPresign);
-adminRouter.post('/upload/complete', requireAuth, postComplete);
+adminRouter.get('/photos', getPhotoList);
+adminRouter.get('/photos/upload', getUploadPage);
+adminRouter.get('/photos/:id/download', getPhotoOriginalDownload);
+adminRouter.patch('/photos/:id', patchPhoto);
+adminRouter.delete('/photos/:id', deletePhoto);
 
-adminRouter.get('/collections', requireAuth, getAdminCollections);
-adminRouter.post('/collections', requireAuth, postCollection);
-adminRouter.patch('/collections/:id', requireAuth, patchCollection);
-adminRouter.delete('/collections/:id', requireAuth, deleteCollection);
+adminRouter.post('/upload/presign', postPresign);
+adminRouter.post('/upload/complete', postComplete);
 
-adminRouter.get('/submissions', requireAuth, getSubmissions);
-adminRouter.patch('/submissions/:id/read', requireAuth, patchSubmissionRead);
+adminRouter.get('/collections', getAdminCollections);
+adminRouter.post('/collections', postCollection);
+adminRouter.patch('/collections/:id', patchCollection);
+adminRouter.delete('/collections/:id', deleteCollection);
 
-adminRouter.get('/carousel', requireAuth, getCarouselAdmin);
-adminRouter.put('/carousel/:position', requireAuth, putCarouselSlot);
-adminRouter.delete('/carousel/:position', requireAuth, deleteCarouselSlot);
+adminRouter.get('/submissions', getSubmissions);
+adminRouter.patch('/submissions/:id/read', patchSubmissionRead);
+
+adminRouter.get('/carousel', getCarouselAdmin);
+adminRouter.put('/carousel/:position', putCarouselSlot);
+adminRouter.delete('/carousel/:position', deleteCarouselSlot);

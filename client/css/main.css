@@ -90,6 +90,23 @@ p + p { margin-top: 1em; }
   transition: opacity var(--dur);
 }
 .nav__link:hover, .nav__link--active { opacity: 1; }
+.nav__link { position: relative; }
+.nav__badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: #e53935;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  border-radius: 9px;
+  pointer-events: none;
+}
 .nav__link-btn {
   background: none;
   border: none;

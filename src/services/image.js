@@ -14,12 +14,16 @@ function outputDims(srcW, srcH, maxSize) {
 
 function watermarkSvg(w, h) {
   const fontSize = Math.max(14, Math.round(w * 0.02));
+  const x = Math.round(w / 2);
   const y = Math.round(h * 0.93);
   return Buffer.from(
     `<svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">` +
-    `<text x="${Math.round(w / 2)}" y="${y}" text-anchor="middle" ` +
+    `<text x="${x + 1}" y="${y + 1}" text-anchor="middle" ` +
     `font-family="Georgia, serif" font-size="${fontSize}px" ` +
-    `fill="white" opacity="0.30" letter-spacing="1">© Bolivar Barrios</text>` +
+    `fill="#000000" opacity="0.25" letter-spacing="1">&#169; Bolivar Barrios</text>` +
+    `<text x="${x}" y="${y}" text-anchor="middle" ` +
+    `font-family="Georgia, serif" font-size="${fontSize}px" ` +
+    `fill="#ffffff" opacity="0.30" letter-spacing="1">&#169; Bolivar Barrios</text>` +
     `</svg>`
   );
 }

@@ -1,7 +1,7 @@
 import { db } from '../db/client.js';
 import { photos } from '../db/schema.js';
 import { asc, isNotNull } from 'drizzle-orm';
-import { presignGet } from '../services/s3.js';
+import { getPublicUrl } from '../services/s3.js';
 
 export async function getHome(req, res, next) {
   try {
@@ -11,12 +11,10 @@ export async function getHome(req, res, next) {
       .orderBy(asc(photos.carouselOrder))
       .limit(5);
 
-    const carouselPhotos = await Promise.all(
-      rows.map(async (p) => ({
-        ...p,
-        originalUrl: await presignGet(p.s3KeyOriginal),
-      }))
-    );
+    const carouselPhotos = rows.map((p) => ({
+      ...p,
+      fullUrl: getPublicUrl(p.s3KeyFull),
+    }));
 
     res.render('home', {
       title: res.locals.t.meta.home,

@@ -94,7 +94,7 @@ p + p { margin-top: 1em; }
 .nav__badge {
   position: absolute;
   top: -6px;
-  right: -10px;
+  right: -20px;
   min-width: 18px;
   height: 18px;
   padding: 0 4px;

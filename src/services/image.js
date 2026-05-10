@@ -19,10 +19,10 @@ function watermarkSvg(w, h) {
   return Buffer.from(
     `<svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg">` +
     `<text x="${x + 1}" y="${y + 1}" text-anchor="middle" ` +
-    `font-family="Georgia, serif" font-size="${fontSize}px" ` +
+    `font-family="Liberation Serif, serif" font-size="${fontSize}px" ` +
     `fill="#000000" opacity="0.25" letter-spacing="1">&#169; Bolivar Barrios</text>` +
     `<text x="${x}" y="${y}" text-anchor="middle" ` +
-    `font-family="Georgia, serif" font-size="${fontSize}px" ` +
+    `font-family="Liberation Serif, serif" font-size="${fontSize}px" ` +
     `fill="#ffffff" opacity="0.30" letter-spacing="1">&#169; Bolivar Barrios</text>` +
     `</svg>`
   );

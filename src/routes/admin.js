@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { requireAuth } from '../middleware/requireAuth.js';
 import { getLogin, postLogin, postLogout } from '../controllers/auth.js';
 import { getDashboard } from '../controllers/dashboard.js';
-import { getPhotoList, patchPhoto, deletePhoto } from '../controllers/photos.js';
+import { getPhotoList, patchPhoto, deletePhoto, getPhotoOriginalDownload } from '../controllers/photos.js';
 import { getUploadPage, postPresign, postComplete } from '../controllers/upload.js';
 import { getAdminCollections, postCollection, patchCollection, deleteCollection } from '../controllers/collections.js';
 import { getSubmissions, patchSubmissionRead } from '../controllers/submissions.js';
@@ -18,6 +18,7 @@ adminRouter.get('/', requireAuth, getDashboard);
 
 adminRouter.get('/photos', requireAuth, getPhotoList);
 adminRouter.get('/photos/upload', requireAuth, getUploadPage);
+adminRouter.get('/photos/:id/download', requireAuth, getPhotoOriginalDownload);
 adminRouter.patch('/photos/:id', requireAuth, patchPhoto);
 adminRouter.delete('/photos/:id', requireAuth, deletePhoto);
 

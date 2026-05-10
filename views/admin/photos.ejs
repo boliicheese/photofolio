@@ -27,6 +27,7 @@
 
           <div class="photo-row__actions">
             <a class="btn btn--ghost btn--sm" href="<%= photo.mediumUrl %>" target="_blank" rel="noopener" title="Ver con watermark">WM</a>
+            <a class="btn btn--ghost btn--sm" href="/admin/photos/<%= photo.id %>/download" title="Descargar original">↓</a>
             <button class="btn btn--ghost btn--sm js-edit-photo" aria-expanded="false"><%= t.admin.photos.edit %></button>
             <button class="btn btn--danger btn--sm js-delete-photo"><%= t.admin.photos.delete %></button>
           </div>

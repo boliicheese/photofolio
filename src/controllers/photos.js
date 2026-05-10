@@ -11,13 +11,11 @@ export async function getPhotoList(req, res, next) {
       db.select().from(collections).orderBy(asc(collections.displayOrder)),
     ]);
 
-    const photosWithUrls = await Promise.all(
-      allPhotos.map(async (p) => ({
-        ...p,
-        thumbUrl:   getPublicUrl(p.s3KeyThumb),
-        mediumUrl:  await presignGet(p.s3KeyMedium),
-      }))
-    );
+    const photosWithUrls = allPhotos.map((p) => ({
+      ...p,
+      thumbUrl:  getPublicUrl(p.s3KeyThumb),
+      mediumUrl: getPublicUrl(p.s3KeyMedium),
+    }));
 
     res.render('admin/photos', {
       title: res.locals.t.meta.adminPhotos,
@@ -82,6 +80,19 @@ export async function patchPhoto(req, res, next) {
     }
 
     res.json({ ok: true });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getPhotoOriginalDownload(req, res, next) {
+  try {
+    const { id } = req.params;
+    const [photo] = await db.select({ key: photos.s3KeyOriginal })
+      .from(photos).where(eq(photos.id, id)).limit(1);
+    if (!photo) return res.status(404).json({ error: 'Not found' });
+    const url = await presignGet(photo.key);
+    res.redirect(url);
   } catch (err) {
     next(err);
   }

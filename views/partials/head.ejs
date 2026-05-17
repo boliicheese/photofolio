@@ -37,6 +37,22 @@
   <meta name="twitter:description" content="<%= typeof description !== 'undefined' ? description : 'Fotografía desde Panamá — Bolivar Barrios' %>">
   <meta name="twitter:image"       content="<%= _ogImg %>">
 
+  <!-- Structured Data: Person / Photographer -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Person", "Photographer"],
+    "name": "Bolivar Barrios",
+    "jobTitle": "Fotógrafo",
+    "url": "https://bolivarbarrios.work",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Ciudad de Panamá",
+      "addressCountry": "PA"
+    }
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">

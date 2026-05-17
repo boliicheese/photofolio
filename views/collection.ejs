@@ -46,4 +46,26 @@
 }))).replace(/</g, '\\u003c') %>
 </script>
 
+<script type="application/ld+json">
+<%- JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  "name": collection.name + " — Bolivar Barrios",
+  "description": collection.description || ("Colección " + collection.name + " — Bolivar Barrios"),
+  "url": "https://bolivarbarrios.work/collections/" + collection.slug,
+  "author": { "@type": "Person", "name": "Bolivar Barrios" },
+  "image": photos.map(p => Object.assign(
+    {
+      "@type": "ImageObject",
+      "contentUrl": p.fullUrl,
+      "name": p.title || "Fotografía de Bolivar Barrios",
+      "creator": { "@type": "Person", "name": "Bolivar Barrios" },
+      "copyrightHolder": { "@type": "Person", "name": "Bolivar Barrios" },
+    },
+    p.location ? { "contentLocation": p.location } : {},
+    p.shotAt   ? { "dateCreated": p.shotAt }        : {}
+  ))
+}).replace(/</g, '\\u003c') %>
+</script>
+
 <%- include('partials/footer') %>

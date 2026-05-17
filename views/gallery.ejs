@@ -52,4 +52,26 @@
 }))).replace(/</g, '\\u003c') %>
 </script>
 
+<script type="application/ld+json">
+<%- JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  "name": "Galería — Bolivar Barrios",
+  "description": "Fotografías de retrato, paisaje, calle y naturaleza desde Panamá.",
+  "url": "https://bolivarbarrios.work/gallery",
+  "author": { "@type": "Person", "name": "Bolivar Barrios" },
+  "image": photos.map(p => Object.assign(
+    {
+      "@type": "ImageObject",
+      "contentUrl": p.fullUrl,
+      "name": p.title || "Fotografía de Bolivar Barrios",
+      "creator": { "@type": "Person", "name": "Bolivar Barrios" },
+      "copyrightHolder": { "@type": "Person", "name": "Bolivar Barrios" },
+    },
+    p.location ? { "contentLocation": p.location } : {},
+    p.shotAt   ? { "dateCreated": p.shotAt }        : {}
+  ))
+}).replace(/</g, '\\u003c') %>
+</script>
+
 <%- include('partials/footer') %>

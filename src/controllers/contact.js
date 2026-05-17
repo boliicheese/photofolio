@@ -12,10 +12,12 @@ const schema = z.object({
 
 export function getContact(req, res) {
   res.render('contact', {
-    title: res.locals.t.meta.contact,
-    success: false,
-    error: null,
-    formData: {},
+    title:       res.locals.t.meta.contact,
+    description: '¿Tienes un proyecto en mente? Escríbele a Bolivar Barrios, fotógrafo en Ciudad de Panamá. Responde personalmente.',
+    canonical:   'https://bolivarbarrios.work/contact',
+    success:     false,
+    error:       null,
+    formData:    {},
   });
 }
 

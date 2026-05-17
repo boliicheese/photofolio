@@ -37,7 +37,13 @@ export async function getCollections(req, res, next) {
       })
     );
 
-    res.render('collections', { title: res.locals.t.meta.collections, collections: enriched });
+    res.render('collections', {
+      title:       res.locals.t.meta.collections,
+      description: 'Colecciones fotográficas de Bolivar Barrios — series organizadas por tema, lugar y proyecto.',
+      canonical:   'https://bolivarbarrios.work/collections',
+      ogImage:     enriched[0]?.coverUrl,
+    collections: enriched,
+    });
   } catch (err) {
     next(err);
   }
@@ -63,9 +69,12 @@ export async function getCollection(req, res, next) {
     }));
 
     res.render('collection', {
-      title: `${col.name} — Bolivar Barrios`,
-      collection: col,
-      photos: photosWithUrls,
+      title:       `${col.name} — Bolivar Barrios`,
+      description: col.description || `Colección "${col.name}" — fotografías de Bolivar Barrios desde Panamá.`,
+      canonical:   `https://bolivarbarrios.work/collections/${col.slug}`,
+      ogImage:     photosWithUrls[0]?.thumbUrl,
+      collection:  col,
+      photos:      photosWithUrls,
     });
   } catch (err) {
     next(err);

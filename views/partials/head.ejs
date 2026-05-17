@@ -5,6 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
   <meta name="description" content="<%= typeof description !== 'undefined' ? description : 'Fotografía desde Panamá — Bolivar Barrios' %>">
+
+  <%
+    const _canon = typeof canonical !== 'undefined' ? canonical : 'https://bolivarbarrios.work';
+    const _ogImg = typeof ogImage !== 'undefined' ? ogImage : 'https://bolivarbarrios.work/og-default.jpg';
+    const _ogType = typeof ogType !== 'undefined' ? ogType : 'website';
+  %>
+
+  <!-- Canonical -->
+  <link rel="canonical" href="<%= _canon %>">
+
+  <!-- hreflang: both languages served at same URL -->
+  <link rel="alternate" hreflang="es" href="<%= _canon %>">
+  <link rel="alternate" hreflang="en" href="<%= _canon %>">
+  <link rel="alternate" hreflang="x-default" href="<%= _canon %>">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="<%= _ogType %>">
+  <meta property="og:url"         content="<%= _canon %>">
+  <meta property="og:title"       content="<%= title %>">
+  <meta property="og:description" content="<%= typeof description !== 'undefined' ? description : 'Fotografía desde Panamá — Bolivar Barrios' %>">
+  <meta property="og:image"       content="<%= _ogImg %>">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale"      content="<%= typeof lang !== 'undefined' && lang === 'en' ? 'en_US' : 'es_PA' %>">
+  <meta property="og:site_name"   content="Bolivar Barrios Fotografía">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="<%= title %>">
+  <meta name="twitter:description" content="<%= typeof description !== 'undefined' ? description : 'Fotografía desde Panamá — Bolivar Barrios' %>">
+  <meta name="twitter:image"       content="<%= _ogImg %>">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">

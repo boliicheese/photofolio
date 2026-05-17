@@ -28,9 +28,12 @@ export async function getGallery(req, res, next) {
     const totalCount = Number(total);
 
     res.render('gallery', {
-      title: res.locals.t.meta.gallery,
-      photos: photosWithUrls,
-      hasMore: totalCount > PAGE_SIZE,
+      title:       res.locals.t.meta.gallery,
+      description: 'Galería de fotografías de Bolivar Barrios — retrato, paisaje, calle, viajes y naturaleza desde Panamá.',
+      canonical:   'https://bolivarbarrios.work/gallery',
+      ogImage:     photosWithUrls[0]?.thumbUrl,
+      photos:      photosWithUrls,
+      hasMore:     totalCount > PAGE_SIZE,
     });
   } catch (err) {
     next(err);

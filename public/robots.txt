@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /lang/
+
+Sitemap: https://bolivarbarrios.work/sitemap.xml

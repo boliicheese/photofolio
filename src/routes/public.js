@@ -5,6 +5,7 @@ import { getCollections, getCollection } from '../controllers/collections.js';
 import { getAbout } from '../controllers/about.js';
 import { getContact, postContact } from '../controllers/contact.js';
 import { contactLimiter } from '../middleware/rateLimiter.js';
+import { getSitemap } from '../controllers/sitemap.js';
 
 export const publicRouter = Router();
 
@@ -15,6 +16,7 @@ publicRouter.get('/lang/:code', (req, res) => {
   res.redirect(back);
 });
 
+publicRouter.get('/sitemap.xml', getSitemap);
 publicRouter.get('/', getHome);
 publicRouter.get('/gallery', getGallery);
 publicRouter.get('/gallery/more', getGalleryMore);

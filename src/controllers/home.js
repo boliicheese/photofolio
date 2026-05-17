@@ -17,7 +17,10 @@ export async function getHome(req, res, next) {
     }));
 
     res.render('home', {
-      title: res.locals.t.meta.home,
+      title:       res.locals.t.meta.home,
+      description: 'Fotografía de retrato, paisaje, calle y naturaleza desde Ciudad de Panamá. Bolivar Barrios, fotógrafo panameño.',
+      canonical:   'https://bolivarbarrios.work',
+      ogImage:     carouselPhotos[0]?.fullUrl,
       carouselPhotos,
       heroNav: true,
     });

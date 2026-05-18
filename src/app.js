@@ -26,7 +26,8 @@ export function createApp() {
     contentSecurityPolicy: {
       directives: {
         defaultSrc:  ["'self'"],
-        scriptSrc:   ["'self'"],
+        scriptSrc:   ["'self'", 'https://challenges.cloudflare.com'],
+        frameSrc:    ["'self'", 'https://challenges.cloudflare.com'],
         styleSrc:    ["'self'", 'https://fonts.googleapis.com'],
         fontSrc:     ["'self'", 'https://fonts.gstatic.com'],
         imgSrc:      ["'self'", s3Origin, 'data:', 'blob:'],

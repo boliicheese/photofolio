@@ -1,0 +1,10 @@
+{
+  "name": "Bolivar Barrios Fotografía",
+  "short_name": "BB Fotografía",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "theme_color": "#0E0E0E",
+  "background_color": "#FAFAF7",
+  "display": "browser"
+}

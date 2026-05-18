@@ -25,7 +25,9 @@
             class="gallery-item__img"
             src="<%= photo.thumbUrl %>"
             alt="<%= photo.title || '' %>"
-            loading="lazy"
+            loading="<%= i === 0 ? 'eager' : 'lazy' %>"
+            fetchpriority="<%= i === 0 ? 'high' : 'auto' %>"
+            decoding="async"
             draggable="false"
           >
         </button>

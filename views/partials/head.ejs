@@ -13,6 +13,9 @@
   %>
 
   <meta name="google-site-verification" content="Yn0fKmkQmV5b0CqaRCd5rioAiL_3w79ZMjCU9pBFJ_E">
+  <% if (typeof heroImage !== 'undefined' && heroImage) { %>
+  <link rel="preload" as="image" href="<%= heroImage %>">
+  <% } %>
 
   <!-- Canonical -->
   <link rel="canonical" href="<%= _canon %>">
